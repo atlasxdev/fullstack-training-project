@@ -1,37 +1,69 @@
+/* Base Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Noto Sans JP", Arial, sans-serif;
     margin: 0;
     padding: 0;
     text-align: center;
+    background-color: #f7f3e9; /* Soft beige (background) */
+    color: #2d2926; /* Charcoal black (text) */
 }
 
+/* Header */
 header {
-    background-color: #4caf50;
-    color: white;
-    padding: 1rem;
+    background-color: #f7cac9; /* Cherry blossom pink */
+    color: #ffffff; /* White text for contrast */
+    padding: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border-bottom: 4px solid #92b558; /* Bamboo green */
 }
 
+/* Main Section */
 main {
     margin: 2rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
 }
 
+/* Button */
 button {
-    padding: 0.5rem 1rem;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    padding: 0.8rem 1.5rem;
+    background-color: #92b558; /* Bamboo green */
+    color: #ffffff; /* White text */
+    border: 2px solid #2d2926; /* Charcoal black for definition */
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #6e8d41; /* Darker bamboo green */
+    transform: scale(1.05);
 }
 
+/* Footer */
 footer {
-    background-color: #f1f1f1;
+    background-color: #dcd7c9; /* Rice paper beige */
+    color: #2d2926; /* Charcoal black */
     padding: 1rem;
     position: fixed;
     bottom: 0;
     width: 100%;
+    font-size: 0.9rem;
+    border-top: 4px solid #f7cac9; /* Cherry blossom pink */
+}
+
+/* Links (optional for future use) */
+a {
+    color: #bb5a5a; /* Persimmon red */
+    text-decoration: none;
+    border-bottom: 1px solid #bb5a5a;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #6e8d41; /* Bamboo green */
+    border-color: #6e8d41;
 }
