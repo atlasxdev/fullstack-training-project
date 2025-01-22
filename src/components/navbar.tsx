@@ -1,11 +1,13 @@
+import { Link } from "react-router";
 import MaxWidthWrapper from "./max-width-wrapper";
 import { ModeToggle } from "./mode-toggle";
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
+import { useSession } from "@/hooks/use-session";
 
 function Navbar() {
-    const user = false;
+    const { session } = useSession();
 
-    if (!user) {
+    if (!session) {
         return <PublicNavbar />;
     }
     return <UserNavbar />;
@@ -17,17 +19,30 @@ function PublicNavbar() {
             <MaxWidthWrapper>
                 <div className="py-4 md:py-6 flex items-center justify-between">
                     <div className="flex items-center justify-center gap-2">
-                        <img
-                            src="/article-hub.png"
-                            className="size-10 object-cover"
-                        />
+                        <img src="/article-hub.png" className="size-10" />
                         <span className="font-bold">
                             Article<span className="text-primary">Hub</span>
                         </span>
                     </div>
                     <div className="flex items-center space-x-2">
-                        <Button variant={"ghost"}>Login</Button>
-                        <Button>Get started now</Button>
+                        <Link
+                            to={"/sign-in"}
+                            className={buttonVariants({
+                                variant: "ghost",
+                                size: "sm",
+                            })}
+                        >
+                            Login
+                        </Link>
+                        <Link
+                            to={"/sign-up"}
+                            className={buttonVariants({
+                                variant: "default",
+                                size: "sm",
+                            })}
+                        >
+                            Get started now
+                        </Link>
                         <ModeToggle />
                     </div>
                 </div>
