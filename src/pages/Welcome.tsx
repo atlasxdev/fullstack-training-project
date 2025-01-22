@@ -1,5 +1,6 @@
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { BackgroundLines } from "@/components/ui/background-lines";
+import { Button } from "@/components/ui/button";
 
 function Welcome() {
     return (
@@ -7,13 +8,14 @@ function Welcome() {
             <MaxWidthWrapper>
                 <BackgroundLines className="flex items-center justify-center w-full">
                     <header className="flex items-center justify-center flex-col mx-auto w-3/4 space-y-6">
-                        <h1 className="text-balance text-center max-w-prose font-bold text-6xl -tracking-tighter">
+                        <h1 className="text-balance text-center max-w-prose font-bold text-4xl md:text-5xl lg:text-6xl -tracking-tighter">
                             Manage Your Articles in One Place
                         </h1>
-                        <p className="font-medium text-balance w-2/4 text-center -tracking-tighter">
+                        <p className="text-sm md:text-base font-medium text-balance w-full md:w-2/4 text-center -tracking-tighter">
                             Track, maintain, and streamline every aspect of your
                             content with ArticleHub.
                         </p>
+                        <Button size={"lg"}>Get started now</Button>
                     </header>
                 </BackgroundLines>
             </MaxWidthWrapper>
