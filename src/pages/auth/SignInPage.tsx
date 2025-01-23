@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -27,6 +27,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { AuthApiError } from "@supabase/supabase-js";
+import FormButton from "@/components/ui/form-button";
 
 function SignInPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,7 +40,7 @@ function SignInPage() {
         resolver: zodResolver(zodSignInSchema),
     });
 
-    async function signUp() {
+    async function signIn() {
         try {
             setIsLoading(true);
             const { error } = await supabase.auth.signInWithOtp({
@@ -115,15 +116,14 @@ function SignInPage() {
                                 />
                             </div>
 
-                            <Button
-                                size={"sm"}
-                                className="w-full gap-2"
-                                disabled={isLoading || !form.formState.isValid}
-                                onClick={signUp}
-                            >
-                                Login
-                                <LogInIcon />
-                            </Button>
+                            <FormButton
+                                icon={<LogInIcon />}
+                                onClick={signIn}
+                                isLoading={isLoading}
+                                isValid={form.formState.isValid}
+                                label="Login"
+                                submittingLabel="Logging in"
+                            />
                         </form>
                     </Form>
                 </CardContent>

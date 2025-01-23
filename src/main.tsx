@@ -10,6 +10,8 @@ import PublicRoute from "@/routes/PublicRoute.tsx";
 import SignInPage from "./pages/auth/SignInPage.tsx";
 import SignUpPage from "./pages/auth/SignUpPage.tsx";
 import { Toaster } from "sonner";
+import AccountSettings from "./pages/AccountSettings.tsx";
+import Navbar from "./components/navbar.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -17,6 +19,7 @@ createRoot(document.getElementById("root")!).render(
             <Toaster richColors position="top-center" />
             <SessionProvider>
                 <BrowserRouter>
+                    <Navbar />
                     <Routes>
                         <Route
                             path="/"
@@ -46,10 +49,18 @@ createRoot(document.getElementById("root")!).render(
                         />
 
                         <Route
-                            path="/homepage"
+                            path="/home"
                             element={
                                 <AuthGate>
                                     <Homepage />
+                                </AuthGate>
+                            }
+                        />
+                        <Route
+                            path="/account-settings"
+                            element={
+                                <AuthGate>
+                                    <AccountSettings />
                                 </AuthGate>
                             }
                         />

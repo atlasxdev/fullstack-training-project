@@ -8,9 +8,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 
 export function ModeToggle() {
-    const { setTheme } = useTheme();
+    const { setTheme, theme } = useTheme();
 
     return (
         <DropdownMenu>
@@ -21,23 +22,29 @@ export function ModeToggle() {
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent className="space-y-1.5" align="end">
                 <DropdownMenuItem
-                    className="flex items-center justify-between"
+                    className={cn("flex items-center justify-between", {
+                        "bg-accent": theme == "light",
+                    })}
                     onClick={() => setTheme("light")}
                 >
                     Light
                     <Sun className="h-[1.2rem] w-[1.2rem]" />
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                    className="flex items-center justify-between"
+                    className={cn("flex items-center justify-between", {
+                        "bg-accent": theme == "dark",
+                    })}
                     onClick={() => setTheme("dark")}
                 >
                     Dark
                     <Moon className="h-[1.2rem] w-[1.2rem]" />
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                    className="flex items-center justify-between"
+                    className={cn("flex items-center justify-between", {
+                        "bg-accent": theme == "system",
+                    })}
                     onClick={() => setTheme("system")}
                 >
                     System

@@ -6,7 +6,7 @@ function PublicRoute({ children }: { children: ReactNode }) {
     const { session } = useSession();
 
     if (session) {
-        return <Navigate to={"/homepage"} />;
+        return <Navigate to={"/home"} />;
     }
 
     return <>{children}</>;

@@ -1,4 +1,4 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -27,6 +27,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { AuthApiError } from "@supabase/supabase-js";
+import { PasswordInput } from "@/components/ui/password-input";
+import FormButton from "@/components/ui/form-button";
 
 function SignUpPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -122,7 +124,7 @@ function SignUpPage() {
                                         <FormItem>
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <Input
+                                                <PasswordInput
                                                     placeholder="Enter a strong password"
                                                     {...field}
                                                 />
@@ -134,15 +136,14 @@ function SignUpPage() {
                                 />
                             </div>
 
-                            <Button
-                                size={"sm"}
-                                className="w-full gap-2"
-                                disabled={isLoading || !form.formState.isValid}
+                            <FormButton
+                                icon={<ChevronRightIcon />}
                                 onClick={signUp}
-                            >
-                                Continue
-                                <ChevronRightIcon />
-                            </Button>
+                                isLoading={isLoading}
+                                isValid={form.formState.isValid}
+                                label="Continue"
+                                submittingLabel="Signing up"
+                            />
                         </form>
                     </Form>
                 </CardContent>

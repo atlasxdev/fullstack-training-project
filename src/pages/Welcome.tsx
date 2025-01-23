@@ -1,6 +1,7 @@
 import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { BackgroundLines } from "@/components/ui/background-lines";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "react-router";
 
 function Welcome() {
     return (
@@ -15,7 +16,15 @@ function Welcome() {
                             Track, maintain, and streamline every aspect of your
                             content with ArticleHub.
                         </p>
-                        <Button size={"lg"}>Get started now</Button>
+                        <Link
+                            to={"/sign-up"}
+                            className={buttonVariants({
+                                variant: "default",
+                                size: "lg",
+                            })}
+                        >
+                            Get started now
+                        </Link>
                     </header>
                 </BackgroundLines>
             </MaxWidthWrapper>
