@@ -2,30 +2,28 @@ import { ReactNode } from "react";
 import { Button } from "./button";
 
 type Props = {
-    isLoading: boolean;
+    isSubmitting: boolean;
     icon: ReactNode;
     isValid: boolean;
     label: string;
     submittingLabel: string;
-    onClick: () => void;
 };
 
 function FormButton({
     icon,
-    isLoading,
+    isSubmitting,
     isValid,
     label,
     submittingLabel,
-    onClick,
 }: Props) {
     return (
         <Button
-            onClick={onClick}
+            type="submit"
             className="w-full gap-2"
             size={"sm"}
-            disabled={isLoading || !isValid}
+            disabled={isSubmitting || !isValid}
         >
-            {isLoading ? (
+            {isSubmitting ? (
                 <>
                     {submittingLabel}
                     {

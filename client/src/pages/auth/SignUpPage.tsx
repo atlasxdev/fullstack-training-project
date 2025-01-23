@@ -9,13 +9,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import supabase from "@/supabase";
 import { TSignUp, zodSignUpSchema } from "@/zod-schema";
 import { ChevronRightIcon } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
     Form,
@@ -26,13 +23,11 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { AuthApiError } from "@supabase/supabase-js";
 import { PasswordInput } from "@/components/ui/password-input";
 import FormButton from "@/components/ui/form-button";
+import { signUp } from "@/actions/auth/sign-up";
 
 function SignUpPage() {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const form = useForm<TSignUp>({
         mode: "onChange",
         defaultValues: {
@@ -42,36 +37,6 @@ function SignUpPage() {
         },
         resolver: zodResolver(zodSignUpSchema),
     });
-
-    async function signUp() {
-        try {
-            setIsLoading(true);
-            const { error } = await supabase.auth.signUp({
-                email: form.getValues("email"),
-                password: form.getValues("password"),
-                options: {
-                    data: {
-                        email: form.getValues("email"),
-                        username: form.getValues("username"),
-                        password: form.getValues("password"),
-                    },
-                },
-            });
-            if (error) {
-                throw new Error(error.message);
-            }
-            toast.success("Email verification has been sent", {
-                description: "Please check you email inbox.",
-            });
-        } catch (error) {
-            const apiError = error as AuthApiError;
-            toast.error(apiError.message + "!", {
-                description: "Please try again.",
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    }
 
     return (
         <div className="h-screen flex items-center justify-center">
@@ -86,7 +51,10 @@ function SignUpPage() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form className="space-y-6">
+                        <form
+                            onSubmit={form.handleSubmit(signUp)}
+                            className="space-y-6"
+                        >
                             <div className="flex flex-col space-y-1.5">
                                 <FormField
                                     control={form.control}
@@ -155,8 +123,7 @@ function SignUpPage() {
 
                             <FormButton
                                 icon={<ChevronRightIcon />}
-                                onClick={signUp}
-                                isLoading={isLoading}
+                                isSubmitting={form.formState.isSubmitting}
                                 isValid={form.formState.isValid}
                                 label="Continue"
                                 submittingLabel="Signing up"

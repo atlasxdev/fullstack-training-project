@@ -81,9 +81,9 @@ function UserNavbar() {
                             <img className="size-8" src="/article-hub.png" />
                             <span className="text-sm">/</span>
                             <div className="flex items-center gap-2">
-                                <p className="text-xs -tracking-tighter">
+                                <p className="text-sm -tracking-tighter">
                                     {" "}
-                                    {session?.user.email}
+                                    {session?.user.user_metadata.username}
                                 </p>
                             </div>
                         </Link>
@@ -107,7 +107,7 @@ function UserNavbar() {
                                 }
                             >
                                 <BookOpenIcon className="size-5" />
-                                <p className="text-xs -tracking-tighter">
+                                <p className="text-sm -tracking-tighter">
                                     Your Articles
                                 </p>
                             </NavLink>
@@ -130,7 +130,7 @@ function UserNavbar() {
                                 }
                             >
                                 <SettingsIcon className="size-5" />
-                                <p className="text-xs -tracking-tighter">
+                                <p className="text-sm -tracking-tighter">
                                     Account Settings
                                 </p>
                             </NavLink>

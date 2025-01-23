@@ -9,13 +9,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import supabase from "@/supabase";
 import { TSignIn, zodSignInSchema } from "@/zod-schema";
 import { LogInIcon } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
     Form,
@@ -26,12 +23,10 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { AuthApiError } from "@supabase/supabase-js";
 import FormButton from "@/components/ui/form-button";
+import { signIn } from "@/actions/auth/sign-in";
 
 function SignInPage() {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
     const form = useForm<TSignIn>({
         mode: "onChange",
         defaultValues: {
@@ -39,31 +34,6 @@ function SignInPage() {
         },
         resolver: zodResolver(zodSignInSchema),
     });
-
-    async function signIn() {
-        try {
-            setIsLoading(true);
-            const { data } = await supabase.from("users").select();
-            console.log(data);
-            const { error } = await supabase.auth.signInWithOtp({
-                email: form.getValues("email"),
-            });
-            if (error) {
-                console.error(error);
-                throw new Error(error.message);
-            }
-            toast.success("A confirmation email has been sent", {
-                description: "Please check you email inbox.",
-            });
-        } catch (error) {
-            const apiError = error as AuthApiError;
-            toast.error(apiError.message + "!", {
-                description: "Please try again.",
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    }
 
     return (
         <div className="h-screen flex items-center justify-center">
@@ -79,7 +49,10 @@ function SignInPage() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form className="space-y-6">
+                        <form
+                            onSubmit={form.handleSubmit(signIn)}
+                            className="space-y-6"
+                        >
                             <div className="flex flex-col space-y-1.5">
                                 <FormField
                                     control={form.control}
@@ -106,8 +79,7 @@ function SignInPage() {
 
                             <FormButton
                                 icon={<LogInIcon />}
-                                onClick={signIn}
-                                isLoading={isLoading}
+                                isSubmitting={form.formState.isSubmitting}
                                 isValid={form.formState.isValid}
                                 label="Login"
                                 submittingLabel="Logging in"
