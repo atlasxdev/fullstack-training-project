@@ -5,8 +5,8 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { pinoLogger } from "hono-pino";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
-import { addUser } from "@/webhook/add-user.js";
 import { verifyToken } from "@/lib/verify-token.js";
+import webhook from "./webhook/add-user.js";
 
 const PORT = process.env.PORT as string;
 const app = new Hono();
@@ -30,12 +30,11 @@ app.use(
         },
     })
 );
+app.route("/webhook", webhook);
 
 app.get("/", (c) => {
     return c.text("Hello Hono!");
 });
-
-app.post("/supabase/webhook/user-create", addUser);
 
 console.log(`Server is running on http://localhost:${PORT}`);
 

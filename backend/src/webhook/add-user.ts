@@ -2,12 +2,14 @@ import "dotenv/config";
 import { ConflictError, UnauthorizedError } from "@/lib/utils/error.js";
 import supabase from "@/supabase.js";
 import { PostgrestError } from "@supabase/supabase-js";
-import type { Context } from "hono";
+import { Hono, type Context } from "hono";
 import type { WebhookPayload } from "@/types/index.js";
 
 const WEBHOOK_SIGNATURE = process.env.WEBHOOK_SIGNATURE as string;
 
-export async function addUser(c: Context) {
+const webhook = new Hono().post("/user-create", addUser);
+
+async function addUser(c: Context) {
     const signature = c.req.header("Authorization")?.split(" ")[1];
     const payload = await c.req.json<WebhookPayload>();
     if (!signature || signature != WEBHOOK_SIGNATURE) {
@@ -58,3 +60,5 @@ export async function addUser(c: Context) {
     c.status(201);
     return c.json({ message: "User has been added" });
 }
+
+export default webhook;
