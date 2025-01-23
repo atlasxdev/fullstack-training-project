@@ -20,7 +20,7 @@ app.use(
         },
     })
 );
-
+app.route("/webhook", webhook);
 app.use(
     "/api/*",
     bearerAuth({
@@ -30,10 +30,13 @@ app.use(
         },
     })
 );
-app.route("/webhook", webhook);
 
 app.get("/", (c) => {
     return c.text("Hello Hono!");
+});
+
+app.notFound((c) => {
+    return c.text("Custom 404 Message", 404);
 });
 
 console.log(`Server is running on http://localhost:${PORT}`);
