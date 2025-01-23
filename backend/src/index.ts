@@ -6,12 +6,9 @@ import { Hono } from "hono";
 import { pinoLogger } from "hono-pino";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
 import { addUser } from "@/webhook/add-user.js";
-import { cors } from "hono/cors";
 import { verifyToken } from "@/lib/verify-token.js";
 
 const PORT = process.env.PORT as string;
-const WEBHOOK_ORIGIN = process.env.WEBHOOK_ORIGIN as string;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN as string;
 const app = new Hono();
 
 app.onError(errorMiddlewareHandler);
@@ -23,11 +20,7 @@ app.use(
         },
     })
 );
-app.use(
-    cors({
-        origin: [WEBHOOK_ORIGIN, CLIENT_ORIGIN],
-    })
-);
+
 app.use(
     "/api/*",
     bearerAuth({
