@@ -12,7 +12,7 @@ let RECORD = {};
 
 app.use(logger());
 
-app.get("/", (c) => {
+app.get("/", async (c) => {
     console.log(RECORD);
     return c.text("Hello Hono!");
 });
