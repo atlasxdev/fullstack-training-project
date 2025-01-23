@@ -9,6 +9,11 @@ app.get("/", (c) => {
     return c.text("Hello Hono!");
 });
 
+app.get("/hello", (c) => {
+    console.log("YES");
+    return c.text("Hello PO!");
+});
+
 app.post("/supabase/webhook/user-create", async (c) => {
     const signature = c.req.header("Authorization")?.split(" ")[1];
 
