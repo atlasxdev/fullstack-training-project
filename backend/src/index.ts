@@ -20,17 +20,17 @@ app.get("/", (c) => {
 app.post("/supabase/webhook/user-create", async (c) => {
     try {
         const data = await c.req.json<WebhookPayload>();
-        // if (record.email_confirmed_at == null) {
-        //     c.status(200);
-        //     return c.json({ message: "Webhook received" });
-        // }
+        if (data.record.email_confirmed_at == null) {
+            c.status(200);
+            return c.json({ message: "Webhook received" });
+        }
         RECORD = data;
-        // await supabase.from("users").insert({
-        //     id: record.id,
-        //     email: record.email,
-        //     username: record.raw_user_meta_data.username,
-        //     password: record.encrypted_password,
-        // });
+        await supabase.from("users").insert({
+            id: data.record.id,
+            email: data.record.email,
+            username: data.record.raw_user_meta_data.username,
+            password: data.record.encrypted_password,
+        });
 
         c.status(201);
         return c.json({ message: "User has been added" });
