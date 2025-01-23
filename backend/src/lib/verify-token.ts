@@ -1,19 +1,15 @@
-import supabase from "@/supabase.js";
+import "dotenv/config";
 import type { Context } from "hono";
 import { UnauthorizedError } from "./utils/error.js";
 
+const WEBHOOK_SIGNATURE = process.env.WEBHOOK_SIGNATURE as string;
+
 export async function verifyToken(token: string, c: Context) {
     try {
-        const { data, error } = await supabase
-            .from("users")
-            .select("id")
-            .eq("id", token);
-
-        if (error) {
+        if (!token || token != WEBHOOK_SIGNATURE) {
             throw new UnauthorizedError("Unauthorized access");
         }
-
-        return Boolean(data?.length);
+        return true;
     } catch (e) {
         return false;
     }

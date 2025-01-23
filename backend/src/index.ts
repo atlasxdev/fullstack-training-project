@@ -6,7 +6,8 @@ import { Hono } from "hono";
 import { pinoLogger } from "hono-pino";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
 import { verifyToken } from "@/lib/verify-token.js";
-import webhook from "./webhook/add-user.js";
+import webhook from "@/webhook/add-user.js";
+import users from "@/routes/users.js";
 
 const PORT = process.env.PORT as string;
 const app = new Hono();
@@ -31,13 +32,14 @@ app.use(
 );
 
 app.route("/webhook", webhook);
+app.route("/api", users);
 
 app.get("/", (c) => {
     return c.text("Hello Hono!");
 });
 
 app.notFound((c) => {
-    return c.text("Custom 404 Message", 404);
+    return c.json({ message: "404 not found" });
 });
 
 console.log(`Server is running on http://localhost:${PORT}`);
