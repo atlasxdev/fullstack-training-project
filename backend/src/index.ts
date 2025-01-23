@@ -2,7 +2,7 @@ import "dotenv/config";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import type { WebhookPayload } from "@/types/index.js";
-import supabase from "./supabase.js";
+import supabase from "@/supabase.js";
 
 const WEBHOOK_SIGNATURE = process.env.WEBHOOK_SIGNATURE as string;
 const app = new Hono();
