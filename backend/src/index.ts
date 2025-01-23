@@ -3,7 +3,7 @@ import { prettyJSON } from "hono/pretty-json";
 import { bearerAuth } from "hono/bearer-auth";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { logger } from "hono/logger";
+import { pinoLogger } from "hono-pino";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
 import { addUser } from "@/webhook/add-user.js";
 import { cors } from "hono/cors";
@@ -16,7 +16,11 @@ const app = new Hono();
 
 app.onError(errorMiddlewareHandler);
 app.use(prettyJSON());
-app.use(logger());
+app.use(
+    pinoLogger({
+        pino: { level: "trace" },
+    })
+);
 app.use(
     cors({
         origin: [WEBHOOK_ORIGIN, CLIENT_ORIGIN],
