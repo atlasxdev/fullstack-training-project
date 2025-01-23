@@ -19,7 +19,7 @@ app.post("/supabase/webhook/user-create", async (c) => {
             return c.json({ message: "Webhook received" });
         }
 
-        await supabase.from("users").insert({
+        await supabase.from("users").upsert({
             id: record.id,
             email: record.email,
             username: record.raw_user_meta_data.username,
