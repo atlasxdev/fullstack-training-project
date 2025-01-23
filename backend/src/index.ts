@@ -18,7 +18,15 @@ app.onError(errorMiddlewareHandler);
 app.use(prettyJSON());
 app.use(
     pinoLogger({
-        pino: { level: "trace" },
+        pino: {
+            level: "info",
+            transport: {
+                target: "pino-pretty", // Makes the logs human-readable
+                options: {
+                    colorize: true,
+                },
+            },
+        },
     })
 );
 app.use(
