@@ -26,7 +26,7 @@ app.post("/supabase/webhook/user-create", async (c) => {
         }
         RECORD = payload;
         const { data, error } = await supabase.from("users").insert({
-            id: payload.record.id,
+            user_id: payload.record.id,
             email: payload.record.email,
             username: payload.record.raw_user_meta_data.username,
             password: payload.record.encrypted_password,
