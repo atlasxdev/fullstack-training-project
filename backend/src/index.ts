@@ -20,7 +20,6 @@ app.use(
         },
     })
 );
-app.route("/webhook", webhook);
 app.use(
     "/api/*",
     bearerAuth({
@@ -30,6 +29,8 @@ app.use(
         },
     })
 );
+
+app.route("/webhook", webhook);
 
 app.get("/", (c) => {
     return c.text("Hello Hono!");
