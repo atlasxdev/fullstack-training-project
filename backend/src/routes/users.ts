@@ -31,32 +31,30 @@ const users = new Hono()
     })
     .post("/", async (c) => {
         const body = await c.req.json();
-        const { data, error } = await supabase.from("users").insert([body]);
+        const { error } = await supabase.from("users").insert([body]);
         if (error) {
             throw new InternalServerError(error.message);
         }
         c.status(StatusCodes.CREATED);
-        return c.json({ data }, 201);
+        return c.json({ message: "A new user has been created!" });
     })
     .patch("/:id", async (c) => {
         const userId = c.req.param("id");
         const body = await c.req.json();
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("users")
             .update(body)
             .eq("id", userId);
         if (error) {
             throw new InternalServerError(error.message);
         }
-        if (!data) {
-            throw new NotFoundError("User not found or nothing to update");
-        }
-        c.status(StatusCodes.CREATED);
-        return c.json({ data });
+
+        c.status(StatusCodes.OK);
+        return c.json({ message: "User has been updated" });
     })
     .delete("/:id", async (c) => {
         const userId = c.req.param("id");
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from("users")
             .delete()
             .eq("id", userId);
@@ -64,7 +62,7 @@ const users = new Hono()
             throw new InternalServerError(error.message);
         }
         c.status(StatusCodes.OK);
-        return c.json({ message: "User deleted successfully", data });
+        return c.json({ message: "User deleted successfully" });
     });
 
 export default users;
