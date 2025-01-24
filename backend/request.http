@@ -1,0 +1,2 @@
+GET http://localhost:3000/api/users
+Authorization: Bearer $2a$12$P2c.IooHhMlaQMJ4R9ySr.Qbcc4RbSZHQfMfxcdGWdbFUt2AIDqc6

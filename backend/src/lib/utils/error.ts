@@ -1,6 +1,8 @@
 import { PostgrestError } from "@supabase/supabase-js";
 import { StatusCodes } from "http-status-codes";
+import { HTTPException } from "hono/http-exception";
 import type { ZodError } from "zod";
+import type { ContentfulStatusCode } from "hono/utils/http-status";
 
 type ErrorName =
     | "Unauthorized" // 401: The user is not authenticated
@@ -15,113 +17,80 @@ type ErrorName =
     | "Service_Unavailable" // 503: The server is not ready to handle the request
     | "Gateway_Timeout"; // 504: The server was acting as a gateway or proxy and did not receive a response in time
 
-export class BadRequestError extends Error {
-    status: number;
-
+export class BadRequestError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.BAD_REQUEST, { message });
         this.name = "BadRequestError";
-        this.status = StatusCodes.BAD_REQUEST;
     }
 }
 
-export class UnauthorizedError extends Error {
-    status: number;
-
+export class UnauthorizedError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.UNAUTHORIZED, { message });
         this.name = "UnauthorizedError";
-        this.status = StatusCodes.UNAUTHORIZED;
     }
 }
 
-export class ForbiddenError extends Error {
-    status: number;
-
+export class ForbiddenError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.FORBIDDEN, { message });
         this.name = "ForbiddenError";
-        this.status = StatusCodes.FORBIDDEN;
     }
 }
 
-export class NotFoundError extends Error {
-    status: number;
-
+export class NotFoundError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.NOT_FOUND, { message });
         this.name = "NotFoundError";
-        this.status = StatusCodes.NOT_FOUND;
     }
 }
 
-export class ConflictError extends Error {
-    status: number;
-
+export class ConflictError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.CONFLICT, { message });
         this.name = "ConflictError";
-        this.status = StatusCodes.CONFLICT;
     }
 }
 
-export class UnprocessableEntityError extends Error {
-    status: number;
-
+export class UnprocessableEntityError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.UNPROCESSABLE_ENTITY, { message });
         this.name = "UnprocessableEntityError";
-        this.status = StatusCodes.UNPROCESSABLE_ENTITY;
     }
 }
 
-export class TooManyRequestsError extends Error {
-    status: number;
-
+export class TooManyRequestsError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.TOO_MANY_REQUESTS, { message });
         this.name = "TooManyRequestsError";
-        this.status = StatusCodes.TOO_MANY_REQUESTS;
     }
 }
 
-export class InternalServerError extends Error {
-    status: number;
-
+export class InternalServerError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.INTERNAL_SERVER_ERROR, { message });
         this.name = "InternalServerError";
-        this.status = StatusCodes.INTERNAL_SERVER_ERROR;
     }
 }
 
-export class BadGatewayError extends Error {
-    status: number;
-
+export class BadGatewayError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.BAD_GATEWAY, { message });
         this.name = "BadGatewayError";
-        this.status = StatusCodes.BAD_GATEWAY;
     }
 }
 
-export class ServiceUnavailableError extends Error {
-    status: number;
-
+export class ServiceUnavailableError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.SERVICE_UNAVAILABLE, { message });
         this.name = "ServiceUnavailableError";
-        this.status = StatusCodes.SERVICE_UNAVAILABLE;
     }
 }
 
-export class GatewayTimeoutError extends Error {
-    status: number;
-
+export class GatewayTimeoutError extends HTTPException {
     constructor(message: string) {
-        super(message);
+        super(StatusCodes.GATEWAY_TIMEOUT, { message });
         this.name = "GatewayTimeoutError";
-        this.status = StatusCodes.GATEWAY_TIMEOUT;
     }
 }
 
@@ -148,7 +117,7 @@ export function createErrorResponse<TError extends Error>(error: TError) {
             error: {
                 name: error.name,
                 message: error.message,
-                details: error.errors, // Include Zod-specific error details
+                details: error.errors,
             },
         };
     }
@@ -163,22 +132,9 @@ export function createErrorResponse<TError extends Error>(error: TError) {
         };
     }
 
-    if (error instanceof Error) {
-        return {
-            statusCode: (error as any).status,
-            error: {
-                name: error.name,
-                message: error.message,
-            },
-        };
+    if (error instanceof HTTPException) {
+        return new HTTPException(error.status, { ...error });
     }
 
-    // Fallback for non-error objects
-    return {
-        statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
-        error: {
-            name: "InternalServerError",
-            message: "An unexpected error occurred",
-        },
-    };
+    return new HTTPException(StatusCodes.INTERNAL_SERVER_ERROR, { ...error });
 }

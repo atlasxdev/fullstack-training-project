@@ -1,6 +1,7 @@
 import { InternalServerError, NotFoundError } from "@/lib/utils/error.js";
 import supabase from "@/supabase.js";
 import { Hono } from "hono";
+import { StatusCodes } from "http-status-codes";
 
 const users = new Hono()
     .basePath("/users")
@@ -9,6 +10,7 @@ const users = new Hono()
         if (error) {
             throw new InternalServerError(error.message);
         }
+        c.status(StatusCodes.OK);
         return c.json({ data });
     })
     .get("/:id", async (c) => {
@@ -24,6 +26,7 @@ const users = new Hono()
             }
             throw new InternalServerError(error.message);
         }
+        c.status(StatusCodes.OK);
         return c.json({ data });
     })
     .post("/", async (c) => {
@@ -32,6 +35,7 @@ const users = new Hono()
         if (error) {
             throw new InternalServerError(error.message);
         }
+        c.status(StatusCodes.CREATED);
         return c.json({ data }, 201);
     })
     .patch("/:id", async (c) => {
@@ -47,6 +51,7 @@ const users = new Hono()
         if (!data) {
             throw new NotFoundError("User not found or nothing to update");
         }
+        c.status(StatusCodes.CREATED);
         return c.json({ data });
     })
     .delete("/:id", async (c) => {
@@ -58,7 +63,7 @@ const users = new Hono()
         if (error) {
             throw new InternalServerError(error.message);
         }
-
+        c.status(StatusCodes.OK);
         return c.json({ message: "User deleted successfully", data });
     });
 

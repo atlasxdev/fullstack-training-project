@@ -1,41 +1,29 @@
 import "dotenv/config";
 import { prettyJSON } from "hono/pretty-json";
-import { bearerAuth } from "hono/bearer-auth";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { pinoLogger } from "hono-pino";
+import { logger } from "hono/logger";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
-import { verifyToken } from "@/lib/verify-token.js";
-import webhook from "@/webhook/add-user.js";
 import users from "@/routes/users.js";
+import supabase from "@/supabase.js";
+import { InternalServerError } from "./lib/utils/error.js";
+import { StatusCodes } from "http-status-codes";
+import webhook from "@/webhook/add-user.js";
+import { verifyToken } from "@/middlewares/verify-token.js";
 
 const PORT = process.env.PORT as string;
 const app = new Hono();
 
 app.onError(errorMiddlewareHandler);
 app.use(prettyJSON());
-app.use(
-    pinoLogger({
-        pino: {
-            level: "info",
-        },
-    })
-);
-app.use(
-    "/api/*",
-    bearerAuth({
-        verifyToken: async (token, c) => {
-            const isAuthorized = await verifyToken(token, c);
-            return isAuthorized;
-        },
-    })
-);
+app.use(logger());
+app.use("/api/*", verifyToken);
 
-app.route("/webhook", webhook);
 app.route("/api", users);
+app.route("/webhook", webhook);
 
 app.get("/", (c) => {
-    return c.text("Hello Hono!");
+    return c.text("Hello world!");
 });
 
 app.notFound((c) => {
