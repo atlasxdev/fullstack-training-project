@@ -5,9 +5,6 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
 import users from "@/routes/users.js";
-import supabase from "@/supabase.js";
-import { InternalServerError } from "./lib/utils/error.js";
-import { StatusCodes } from "http-status-codes";
 import webhook from "@/webhook/add-user.js";
 import { verifyToken } from "@/middlewares/verify-token.js";
 
