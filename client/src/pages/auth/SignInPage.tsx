@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import FormButton from "@/components/ui/form-button";
 import { signIn } from "@/actions/auth/sign-in";
+import { useEffect } from "react";
 
 function SignInPage() {
     const form = useForm<TSignIn>({
@@ -34,6 +35,14 @@ function SignInPage() {
         },
         resolver: zodResolver(zodSignInSchema),
     });
+
+    useEffect(() => {
+        if (form.formState.isSubmitSuccessful) {
+            form.reset({
+                email: "",
+            });
+        }
+    }, [form]);
 
     return (
         <div className="h-screen flex items-center justify-center">
@@ -78,6 +87,7 @@ function SignInPage() {
                             </div>
 
                             <FormButton
+                                size="sm"
                                 icon={<LogInIcon />}
                                 isSubmitting={form.formState.isSubmitting}
                                 isValid={form.formState.isValid}

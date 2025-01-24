@@ -3,10 +3,11 @@ import { Button } from "./button";
 
 type Props = {
     isSubmitting: boolean;
-    icon: ReactNode;
+    icon?: ReactNode;
     isValid: boolean;
     label: string;
     submittingLabel: string;
+    size: "sm" | "lg" | "default";
 };
 
 function FormButton({
@@ -14,13 +15,14 @@ function FormButton({
     isSubmitting,
     isValid,
     label,
+    size = "default",
     submittingLabel,
 }: Props) {
     return (
         <Button
             type="submit"
             className="w-full gap-2"
-            size={"sm"}
+            size={size}
             disabled={isSubmitting || !isValid}
         >
             {isSubmitting ? (

@@ -12,9 +12,6 @@ export async function signIn({ email }: { email: string }) {
         if (!_data?.length) {
             throw new Error("User not found");
         }
-
-        const { data } = await supabase.from("users").select();
-        console.log(data);
         const { error } = await supabase.auth.signInWithOtp({
             email: email,
         });
@@ -30,5 +27,7 @@ export async function signIn({ email }: { email: string }) {
         toast.error(apiError.message + "!", {
             description: "Please try again.",
         });
+    } finally {
+        toast.dismiss();
     }
 }

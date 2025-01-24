@@ -26,6 +26,7 @@ import {
 import { PasswordInput } from "@/components/ui/password-input";
 import FormButton from "@/components/ui/form-button";
 import { signUp } from "@/actions/auth/sign-up";
+import { useEffect } from "react";
 
 function SignUpPage() {
     const form = useForm<TSignUp>({
@@ -37,6 +38,16 @@ function SignUpPage() {
         },
         resolver: zodResolver(zodSignUpSchema),
     });
+
+    useEffect(() => {
+        if (form.formState.isSubmitSuccessful) {
+            form.reset({
+                email: "",
+                password: "",
+                username: "",
+            });
+        }
+    }, [form]);
 
     return (
         <div className="h-screen flex items-center justify-center">
@@ -122,6 +133,7 @@ function SignUpPage() {
                             </div>
 
                             <FormButton
+                                size="sm"
                                 icon={<ChevronRightIcon />}
                                 isSubmitting={form.formState.isSubmitting}
                                 isValid={form.formState.isValid}

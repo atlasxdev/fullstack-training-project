@@ -45,5 +45,7 @@ export async function signUp({ email, password, username }: TSignUp) {
         toast.error(apiError.message + "!", {
             description: "Please try again.",
         });
+    } finally {
+        toast.dismiss();
     }
 }

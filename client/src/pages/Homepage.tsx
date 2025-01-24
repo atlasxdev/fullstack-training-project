@@ -1,6 +1,6 @@
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import AddArticleSheet from "./components/homepage/add-article-sheet";
 
 function Homepage() {
     return (
@@ -18,7 +18,7 @@ function Homepage() {
                             src="/no-articles.png"
                             className="size-56 object-cover"
                         />
-                        <Button>Create a new article</Button>
+                        <AddArticleSheet label="Create a new article" />
                     </CardHeader>
                 </Card>
             </MaxWidthWrapper>
