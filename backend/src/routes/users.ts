@@ -34,7 +34,7 @@ const users = new Hono()
         }
         return c.json({ data }, 201); // Return created resource with status 201
     })
-    .put("/:id", async (c) => {
+    .patch("/:id", async (c) => {
         const userId = c.req.param("id");
         const body = await c.req.json();
         const { data, error } = await supabase
