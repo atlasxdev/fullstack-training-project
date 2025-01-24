@@ -32,7 +32,7 @@ const users = new Hono()
         if (error) {
             throw new InternalServerError(error.message);
         }
-        return c.json({ data }, 201); // Return created resource with status 201
+        return c.json({ data }, 201);
     })
     .patch("/:id", async (c) => {
         const userId = c.req.param("id");

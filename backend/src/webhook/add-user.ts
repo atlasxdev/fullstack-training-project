@@ -5,12 +5,12 @@ import { PostgrestError } from "@supabase/supabase-js";
 import { Hono } from "hono";
 import type { WebhookPayload } from "@/types/index.js";
 
-const WEBHOOK_SIGNATURE = process.env.WEBHOOK_SIGNATURE as string;
+const ADMIN_SIGNATURE = process.env.ADMIN_SIGNATURE as string;
 
 const webhook = new Hono().post("/user-create", async (c) => {
     const signature = c.req.header("Authorization")?.split(" ")[1];
     const payload = await c.req.json<WebhookPayload>();
-    if (!signature || signature != WEBHOOK_SIGNATURE) {
+    if (!signature || signature != ADMIN_SIGNATURE) {
         throw new UnauthorizedError("Invalid token signature");
     }
 
