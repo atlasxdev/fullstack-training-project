@@ -1,12 +1,12 @@
-describe("Render 404 page", () => {
-    it("should render the 404 when the user searches a random URL", () => {
+describe("404 Page", () => {
+    it("renders 404 page when the user searches a random URL", () => {
         cy.visit("http://localhost:5173/123");
         cy.get("h1").should("contain", "404");
     });
 });
 
-describe("Render the entry page", () => {
-    it("should render the 404 first then render the entry page when Go back is clicked", () => {
+describe("404 and Entry Page Navigation", () => {
+    it("renders 404 page and navigates back to the entry page", () => {
         cy.visit("http://localhost:5173/123");
         cy.get("h1").should("contain", "404");
 

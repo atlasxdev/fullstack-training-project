@@ -13,7 +13,9 @@ const session: Session = {
         aud: "",
         created_at: "",
         id: "",
-        user_metadata: {},
+        user_metadata: {
+            username: "test_user",
+        },
     },
 };
 
