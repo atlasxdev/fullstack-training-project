@@ -1,5 +1,4 @@
 import Welcome from "@/pages/Welcome";
-
 import Footer from "@/components/footer";
 
 function Index() {
