@@ -13,7 +13,7 @@ import {
 import { TUsername, zodUsernameSchema } from "@/zod-schema";
 import { useSession } from "@/hooks/use-session";
 import FormButton from "@/components/ui/form-button";
-import { updateUsername } from "@/actions/update-username";
+import { updateUsername } from "@/actions/user/update-username";
 
 function UpdateUsername() {
     const { session } = useSession();
