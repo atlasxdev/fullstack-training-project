@@ -4,9 +4,11 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { errorMiddlewareHandler } from "@/middlewares/error-middleware.js";
-import users from "@/routes/users.js";
 import webhook from "@/webhook/add-user.js";
-import { verifyToken } from "@/middlewares/verify-token.js";
+import { verifyAdminToken } from "@/middlewares/verify-admin-token.js";
+import { verifyUserToken } from "@/middlewares/verify-user-token.js";
+import admin from "@/routes/admin.js";
+import users from "@/routes/users.js";
 
 const PORT = process.env.PORT as string;
 const app = new Hono();
@@ -14,9 +16,11 @@ const app = new Hono();
 app.onError(errorMiddlewareHandler);
 app.use(prettyJSON());
 app.use(logger());
-app.use("/api/*", verifyToken);
+app.use("/api/admin", verifyAdminToken);
+app.use("/api/users", verifyUserToken);
 
-app.route("/api", users);
+app.route("/api/admin", admin);
+app.route("/api/users", users);
 app.route("/webhook", webhook);
 
 app.get("/", (c) => {
