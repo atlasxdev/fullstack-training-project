@@ -1,0 +1,17 @@
+{
+    "name": "directus-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "npx directus start",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "directus": "^11.4.0",
+        "pg": "^8.13.1"
+    }
+}
