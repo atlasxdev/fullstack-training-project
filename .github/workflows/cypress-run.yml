@@ -5,22 +5,26 @@ on: [push]
 jobs:
     cypress-run:
         runs-on: ubuntu-latest
+
         steps:
-            - name: Checkout repository
-              uses: actions/checkout@v6
+            - name: Checkout
+              uses: actions/checkout@v3
 
             - name: Set up Node.js
-              uses: actions/setup-node@v6
+              uses: actions/setup-node@v3
               with:
                   node-version: "20"
 
             - name: Install dependencies
+              working-directory: ./client
               run: npm ci
 
-            - name: Start server
-              run: npm run dev &
-              env:
-                  CI: true
+            - name: Start development server
+              working-directory: ./client
+              run: npm run dev
 
             - name: Run Cypress tests
-              run: npm run cy:open
+              uses: cypress-io/github-action@v6
+              with:
+                  working-directory: ./client
+                  browser: chrome
