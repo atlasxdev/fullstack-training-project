@@ -11,16 +11,21 @@ jobs:
               uses: actions/setup-node@v3
               with:
                   node-version: "20"
+                  cache: "npm"
 
             - name: Install dependencies
               working-directory: ./client
-              run: npm ci
+              run: npm install
 
+            - name: Build CSS
+              working-directory: ./client
+              run: npm run tailwind
             - name: Run Cypress tests
               uses: cypress-io/github-action@v5
               with:
                   working-directory: ./client
+                  component: true
                   build: npm run build
                   start: npm run dev
-                  wait-on: "http://localhost:5173" # Default Vite port
-                  wait-on-timeout: 120 # Seconds to
+                  wait-on: "http://localhost:5173"
+                  wait-on-timeout: 120
