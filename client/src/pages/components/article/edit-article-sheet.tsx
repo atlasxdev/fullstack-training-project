@@ -23,28 +23,40 @@ import { Textarea } from "@/components/ui/textarea";
 import { TArticle, zodArticleSchema } from "@/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PencilRulerIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-function AddArticleSheet({ label }: { label: string }) {
+function EditArticleSheet({
+    articleId,
+    title,
+    content,
+}: {
+    articleId: string;
+    title: string;
+    content: string;
+}) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const queryClient = useQueryClient();
     const axiosInstance = useAxiosInstance();
     const form = useForm<TArticle>({
         mode: "onChange",
         defaultValues: {
-            title: "",
-            content: "",
+            title: title,
+            content: content,
         },
         resolver: zodResolver(zodArticleSchema),
     });
 
     const { mutate, isPending } = useMutation({
         mutationFn: async (data: TArticle) => {
-            return await axiosInstance.post<{ message: string }>("/articles", {
-                ...data,
-            });
+            return await axiosInstance.patch<{ message: string }>(
+                `/articles/${articleId}`,
+                {
+                    ...data,
+                }
+            );
         },
         onSuccess({ data: { message } }) {
             toast.success(message, {
@@ -61,34 +73,34 @@ function AddArticleSheet({ label }: { label: string }) {
             queryClient.invalidateQueries({
                 queryKey: ["articles"],
             });
-            form.resetField("title", {
-                defaultValue: "",
-            });
-            form.resetField("content", {
-                defaultValue: "",
+            queryClient.invalidateQueries({
+                queryKey: ["article", articleId],
             });
         },
     });
 
-    function createArticle(data: TArticle) {
+    function updateArticle(data: TArticle) {
         mutate({ ...data });
     }
 
     return (
         <Sheet open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
             <SheetTrigger asChild>
-                <Button>{label}</Button>
+                <Button className="gap-2" variant={"outline"}>
+                    Edit
+                    <PencilRulerIcon />
+                </Button>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>
-                    <SheetTitle>Add a new article</SheetTitle>
+                    <SheetTitle>Edit article</SheetTitle>
                     <SheetDescription>
-                        Create your article here. Click save when you're done.
+                        Edit your article here. Click save when you're done.
                     </SheetDescription>
                 </SheetHeader>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(createArticle)}
+                        onSubmit={form.handleSubmit(updateArticle)}
                         className="grid gap-4 py-4"
                     >
                         <FormField
@@ -142,8 +154,8 @@ function AddArticleSheet({ label }: { label: string }) {
                                 size="default"
                                 isSubmitting={isPending}
                                 isValid={form.formState.isValid}
-                                label="Create article"
-                                submittingLabel="Creating article"
+                                label="Edit article"
+                                submittingLabel="Updating article"
                             />
                         </div>
                     </form>
@@ -153,4 +165,4 @@ function AddArticleSheet({ label }: { label: string }) {
     );
 }
 
-export default AddArticleSheet;
+export default EditArticleSheet;

@@ -4,25 +4,30 @@ import UpdateUsername from "./components/account-settings/update-username";
 
 function AccountSettings() {
     return (
-        <MaxWidthWrapper className="max-w-screen-xl py-10 space-y-6">
-            <h1 className="font-bold text-2xl -tracking-tighter">
-                Account Settings
-            </h1>
+        <section className="py-8 bg-secondary dark:bg-background">
+            <MaxWidthWrapper className="max-w-screen-xl space-y-6">
+                <header>
+                    <h1 className="font-bold text-3xl -tracking-tighter">
+                        Account settings
+                    </h1>
+                </header>
 
-            <Card className="border rounded-lg">
-                <CardHeader className="border-b bg-secondary">
-                    <CardTitle className="font-normal -tracking-tighter">
-                        Display Name
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="py-6 space-y-6">
-                    <p className="text-sm -tracking-tighter">
-                        To update your display name, please fill the form below
-                    </p>
-                    <UpdateUsername />
-                </CardContent>
-            </Card>
-        </MaxWidthWrapper>
+                <Card className="border rounded-lg">
+                    <CardHeader className="border-b bg-secondary">
+                        <CardTitle className="font-normal -tracking-tighter">
+                            Display Name
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="py-6 space-y-6">
+                        <p className="text-sm -tracking-tighter">
+                            To update your display name, please fill the form
+                            below
+                        </p>
+                        <UpdateUsername />
+                    </CardContent>
+                </Card>
+            </MaxWidthWrapper>
+        </section>
     );
 }
 

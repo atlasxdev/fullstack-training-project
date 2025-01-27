@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 function useSessionListener(initialSession: Session | null) {
     const [session, setSession] = useState<Session | null>(initialSession);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const authStateListener = supabase.auth.onAuthStateChange(

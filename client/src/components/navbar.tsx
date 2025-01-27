@@ -4,7 +4,7 @@ import { ModeToggle } from "./mode-toggle";
 import { Button, buttonVariants } from "./ui/button";
 import { useSession } from "@/hooks/use-session";
 import { cn } from "@/lib/utils";
-import { BellIcon, BookOpenIcon, LogOutIcon, SettingsIcon } from "lucide-react";
+import { BookOpenIcon, LogOutIcon, SettingsIcon } from "lucide-react";
 import supabase from "@/supabase";
 
 function Navbar() {
@@ -137,9 +137,6 @@ function UserNavbar() {
                         </div>
                     </div>
                     <div className="flex items-center justify-center gap-4">
-                        <Button variant={"ghost"} size="icon">
-                            <BellIcon className="size-5" />
-                        </Button>
                         <ModeToggle />
                         <Button
                             onClick={signOut}

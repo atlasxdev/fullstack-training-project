@@ -8,6 +8,7 @@ import AccountSettings from "./pages/AccountSettings.tsx";
 import Navbar from "./components/navbar.tsx";
 import NotFound from "@/pages/NotFound.tsx";
 import Index from "./index.tsx";
+import Article from "./pages/Article.tsx";
 
 function App() {
     return (
@@ -54,6 +55,15 @@ function App() {
                     element={
                         <AuthGate>
                             <AccountSettings />
+                        </AuthGate>
+                    }
+                />
+
+                <Route
+                    path="/articles/:id"
+                    element={
+                        <AuthGate>
+                            <Article />
                         </AuthGate>
                     }
                 />
