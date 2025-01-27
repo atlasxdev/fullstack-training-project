@@ -134,6 +134,7 @@ function SearchArticle() {
                                 {error instanceof AxiosError && (
                                     <div className="pt-4 space-y-1">
                                         <img
+                                            alt="no articles image"
                                             src="/no-articles.png"
                                             className="size-24 mx-auto"
                                         />

@@ -23,7 +23,11 @@ function PublicNavbar() {
                 <div className="py-4 md:py-6 flex items-center justify-between">
                     <Link to={"/"}>
                         <div className="flex items-center justify-center gap-2">
-                            <img src="/article-hub.png" className="size-10" />
+                            <img
+                                alt="app logo"
+                                src="/article-hub.png"
+                                className="size-10"
+                            />
                             <span className="font-bold">
                                 Article<span className="text-primary">Hub</span>
                             </span>
@@ -78,7 +82,11 @@ function UserNavbar() {
                             to={"/home"}
                             className="flex items-center justify-center gap-4"
                         >
-                            <img className="size-8" src="/article-hub.png" />
+                            <img
+                                alt="app logo"
+                                className="size-8"
+                                src="/article-hub.png"
+                            />
                             <span className="text-sm">/</span>
                             <div className="flex items-center gap-2">
                                 <p className="text-sm -tracking-tighter">

@@ -6,7 +6,11 @@ function NoArticles() {
         <Card className="bg-secondary py-16">
             <CardHeader className="flex flex-col items-center w-max mx-auto">
                 <CardTitle>No articles created yet!</CardTitle>
-                <img src="/no-articles.png" className="size-56 object-cover" />
+                <img
+                    alt="no articles image"
+                    src="/no-articles.png"
+                    className="size-56 object-cover"
+                />
                 <AddArticleSheet label="Create a new article" />
             </CardHeader>
         </Card>
