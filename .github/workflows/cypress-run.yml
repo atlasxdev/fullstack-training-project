@@ -7,20 +7,7 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Install dependencies
-              working-directory: ./client
-              run: npm install
-
-            - name: Build CSS
-              working-directory: ./client
-              run: npm run tailwind
-
             - name: Run Cypress tests
               uses: cypress-io/github-action@v5
               with:
                   working-directory: ./client
-                  component: true
-                  build: npm run build
-                  start: npm run dev
-                  wait-on: "http://localhost:5173"
-                  wait-on-timeout: 120

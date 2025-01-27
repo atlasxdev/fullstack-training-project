@@ -75,6 +75,7 @@ function SignUpPage() {
                                             <FormLabel>Username</FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    data-test="username"
                                                     autoFocus
                                                     placeholder="Enter your username"
                                                     {...field}
@@ -98,6 +99,7 @@ function SignUpPage() {
                                             <FormLabel>Email</FormLabel>
                                             <FormControl>
                                                 <Input
+                                                    data-test="email"
                                                     placeholder="Enter your email address"
                                                     {...field}
                                                 />
@@ -121,6 +123,7 @@ function SignUpPage() {
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
                                                 <PasswordInput
+                                                    data-test="password"
                                                     placeholder="Enter a strong password"
                                                     {...field}
                                                 />
