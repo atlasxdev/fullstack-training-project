@@ -1,5 +1,9 @@
 name: End-to-end tests
 on: [push]
+env:
+    VITE_SUPABASE_URL: "https://dioketiuedohqlaegzhm.supabase.co"
+    VITE_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpb2tldGl1ZWRvaHFsYWVnemhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NDI4NTksImV4cCI6MjA1MzExODg1OX0.aOl2aPqWDCvzc1eCenT2cqkSPw87zDc36WB9x1dyxs4"
+    VITE_SERVER_URL: "http://localhost:3000/api/users"
 jobs:
     cypress-run:
         runs-on: ubuntu-latest
