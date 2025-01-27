@@ -56,7 +56,7 @@ describe("Signup page user email taken", () => {
 describe("Signup page username taken", () => {
     it("renders Signup page and checks if username is already taken", () => {
         cy.visit("http://localhost:5173/sign-up");
-        cy.get('[data-test="username"]').type("ace_123");
+        cy.get('[data-test="username"]').type("mor_123");
         cy.get('[data-test="email"]').type("ace123@gmail.com");
         cy.get('[data-test="password"]').type("test123123");
 
