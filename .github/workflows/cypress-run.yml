@@ -11,3 +11,6 @@ jobs:
               uses: cypress-io/github-action@v5
               with:
                   working-directory: ./client
+                  start: npm run dev
+                  wait-on: "http://localhost:5173"
+                  wait-on-timeout: 120
