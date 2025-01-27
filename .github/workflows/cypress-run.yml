@@ -1,18 +1,32 @@
 name: End-to-end tests
+
 on: [push]
 
 jobs:
     cypress-run:
         runs-on: ubuntu-latest
+
         steps:
             - name: Checkout
               uses: actions/checkout@v3
 
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "20"
+
             - name: Install dependencies
               working-directory: ./client
-              run: npm install
+              run: npm ci
 
-            - name: Cypress run
+            - name: Start development server
+              working-directory: ./client
+              run: npm run dev
+
+            - name: Wait for server to be ready
+              run: npx wait-on http://localhost:5173
+
+            - name: Run Cypress tests
               uses: cypress-io/github-action@v6
               with:
                   working-directory: ./client
