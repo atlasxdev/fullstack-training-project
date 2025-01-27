@@ -1,6 +1,5 @@
-import "../../src/output.css";
-import App from "@/App";
-import { SessionProvider } from "@/context/SessionContext";
+import App from "../../src/App";
+import { SessionProvider } from "../../src/context/SessionContext";
 import { Session } from "@supabase/supabase-js";
 
 const session: Session = {
