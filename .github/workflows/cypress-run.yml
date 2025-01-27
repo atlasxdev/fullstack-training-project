@@ -7,13 +7,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v3
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: "20"
-                  cache: "npm"
-                  working-directory: ./client
-
             - name: Install dependencies
               working-directory: ./client
               run: npm install
@@ -21,6 +14,7 @@ jobs:
             - name: Build CSS
               working-directory: ./client
               run: npm run tailwind
+
             - name: Run Cypress tests
               uses: cypress-io/github-action@v5
               with:
