@@ -7,6 +7,7 @@
   "dependencies": {
     "@directus/sdk": "^19.0.0",
     "@hono/node-server": "^1.13.7",
+    "@hono/zod-validator": "^0.4.2",
     "@supabase/supabase-js": "^2.48.0",
     "dotenv": "^16.4.7",
     "hono": "^4.6.17",

@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { prettyJSON } from "hono/pretty-json";
+import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
@@ -14,6 +15,12 @@ const PORT = process.env.PORT as string;
 const app = new Hono();
 
 app.onError(errorMiddlewareHandler);
+app.use(
+    cors({
+        origin: "*",
+        allowMethods: ["GET", "POST", "PATCH", "DELETE"],
+    })
+);
 app.use(prettyJSON());
 app.use(logger());
 app.use("/api/admin", verifyAdminToken);
