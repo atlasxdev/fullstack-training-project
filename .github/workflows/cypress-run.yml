@@ -19,10 +19,6 @@ jobs:
               working-directory: ./client
               run: npm ci
 
-            - name: Start development server
-              working-directory: ./client
-              run: npm run dev
-
             - name: Run Cypress tests
               uses: cypress-io/github-action@v6
               with:
