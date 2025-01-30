@@ -5,6 +5,7 @@ import { Hono } from "hono";
 import { StatusCodes } from "http-status-codes";
 
 const admin = new Hono()
+    .basePath("users")
     .get("/", async (c) => {
         const { data, error } = await supabase.from("users").select("*");
         if (error) {
@@ -18,7 +19,7 @@ const admin = new Hono()
         const { data, error } = await supabase
             .from("users")
             .select("*")
-            .eq("id", userId);
+            .eq("user_id", userId);
 
         if (!data?.length) {
             throw new NotFoundError("No user found");
@@ -32,7 +33,9 @@ const admin = new Hono()
     })
     .post("/", async (c) => {
         const body = await c.req.json();
-        const { error } = await supabase.from("users").insert([body]);
+        const { error } = await supabase.from("users").insert({
+            ...body,
+        });
         if (error) {
             throw new PostgrestError(error);
         }
@@ -45,7 +48,7 @@ const admin = new Hono()
         const { error } = await supabase
             .from("users")
             .update(body)
-            .eq("id", userId);
+            .eq("user_id", userId);
 
         if (error) {
             throw new PostgrestError(error);
@@ -59,7 +62,7 @@ const admin = new Hono()
         const { error } = await supabase
             .from("users")
             .delete()
-            .eq("id", userId);
+            .eq("user_id", userId);
 
         if (error) {
             throw new PostgrestError(error);

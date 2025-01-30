@@ -1,2 +1,4 @@
-GET http://localhost:3000/api/users/8
-Authorization: Bearer $2a$12$P2c.IooHhMlaQMJ4R9ySr.Qbcc4RbSZHQfMfxcdGWdbFUt2AIDqc6
+GET  http://localhost:3000/api/users/articles?page=1
+Authorization: Bearer 08b72453-d02a-4a3e-b2a9-6dc97c24fde
+
+

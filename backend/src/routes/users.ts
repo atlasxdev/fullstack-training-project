@@ -14,7 +14,8 @@ import { Hono } from "hono";
 import { StatusCodes } from "http-status-codes";
 
 const users = new Hono()
-    .get("articles", async (c) => {
+    .basePath("articles")
+    .get("/", async (c) => {
         const userId = getBearerToken(c);
         const page = parseInt(c.req.query("page") ?? "1");
         const LIMIT = 15;
@@ -43,7 +44,7 @@ const users = new Hono()
         c.status(StatusCodes.OK);
         return c.json({ articles });
     })
-    .get("articles/search", async (c) => {
+    .get("/search", async (c) => {
         const userId = getBearerToken(c);
         const page = parseInt(c.req.query("page") ?? "1");
         const searchKeyword = c.req.query("keyword");
@@ -75,7 +76,7 @@ const users = new Hono()
         c.status(StatusCodes.OK);
         return c.json({ articles });
     })
-    .get("articles/:articleId", async (c) => {
+    .get("/:articleId", async (c) => {
         const userId = getBearerToken(c);
         const articleId = c.req.param("articleId");
 
@@ -96,7 +97,7 @@ const users = new Hono()
         c.status(StatusCodes.OK);
         return c.json({ article });
     })
-    .post("articles", validateBody("json", articleSchema), async (c) => {
+    .post("/", validateBody("json", articleSchema), async (c) => {
         const body = c.req.valid("json");
         const userId = getBearerToken(c);
 
@@ -110,24 +111,20 @@ const users = new Hono()
         c.status(StatusCodes.CREATED);
         return c.json({ message: "Article has been created." });
     })
-    .patch(
-        "articles/:articleId",
-        validateBody("json", articleSchema),
-        async (c) => {
-            const articleId = c.req.param("articleId");
-            const body = c.req.valid("json");
+    .patch("/:articleId", validateBody("json", articleSchema), async (c) => {
+        const articleId = c.req.param("articleId");
+        const body = c.req.valid("json");
 
-            await directusClient.request(
-                updateItem("articles", articleId, {
-                    ...body,
-                })
-            );
+        await directusClient.request(
+            updateItem("articles", articleId, {
+                ...body,
+            })
+        );
 
-            c.status(StatusCodes.OK);
-            return c.json({ message: "Your article has been updated." });
-        }
-    )
-    .delete("articles/:articleId", async (c) => {
+        c.status(StatusCodes.OK);
+        return c.json({ message: "Your article has been updated." });
+    })
+    .delete("/:articleId", async (c) => {
         const articleId = c.req.param("articleId");
         await directusClient.request(deleteItem("articles", articleId));
         c.status(StatusCodes.CREATED);
