@@ -46,7 +46,7 @@ function Article() {
     return (
         <section className="min-h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
-                <div className="flex justify-between items-center">
+                <div className="flex items-center">
                     {data.data.article.date_updated && (
                         <Badge
                             variant={"secondary"}
@@ -61,7 +61,7 @@ function Article() {
                             )}
                         </Badge>
                     )}
-                    <div className="flex items-center space-x-4">
+                    <div className="w-max ml-auto flex items-center space-x-4">
                         <EditArticleSheet
                             articleId={params.id}
                             title={data.data.article.title}
