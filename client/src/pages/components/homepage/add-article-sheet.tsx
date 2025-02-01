@@ -1,4 +1,5 @@
 import { useAxiosInstance } from "@/api/axios-instance";
+import RTEContent from "@/components/tiptap/rte-content";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -11,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import FormButton from "@/components/ui/form-button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
     Sheet,
     SheetContent,
@@ -19,13 +21,13 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea";
 import { TArticle, zodArticleSchema } from "@/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { sanitizeArticleContent } from "@/lib/utils";
 
 function AddArticleSheet({ label }: { label: string }) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -71,7 +73,8 @@ function AddArticleSheet({ label }: { label: string }) {
     });
 
     function createArticle(data: TArticle) {
-        mutate({ ...data });
+        const sanitizedContent = sanitizeArticleContent(data.content);
+        mutate({ ...data, content: sanitizedContent });
     }
 
     return (
@@ -86,68 +89,74 @@ function AddArticleSheet({ label }: { label: string }) {
                         Create your article here. Click save when you're done.
                     </SheetDescription>
                 </SheetHeader>
-                <Form {...form}>
-                    <form
-                        onSubmit={form.handleSubmit(createArticle)}
-                        className="grid gap-4 py-4"
-                    >
-                        <FormField
-                            control={form.control}
-                            name="title"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>
-                                        Title{" "}
-                                        <span className="text-destructive">
-                                            *
-                                        </span>
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Input autoFocus type="" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your article title.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="content"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>
-                                        Content{" "}
-                                        <span className="text-destructive">
-                                            *
-                                        </span>
-                                    </FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            className="min-h-36"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is your article content.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <div className="h-1" />
-                        <div className="w-max ml-auto">
-                            <FormButton
-                                size="default"
-                                isSubmitting={isPending}
-                                isValid={form.formState.isValid}
-                                label="Create article"
-                                submittingLabel="Creating article"
+
+                <ScrollArea className="pr-4 h-[85vh]">
+                    <Form {...form}>
+                        <form
+                            onSubmit={form.handleSubmit(createArticle)}
+                            className="grid gap-4 py-4"
+                        >
+                            <FormField
+                                control={form.control}
+                                name="title"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Title{" "}
+                                            <span className="text-destructive">
+                                                *
+                                            </span>
+                                        </FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                className="max-w-[500px] mx-auto"
+                                                autoFocus
+                                                type=""
+                                                {...field}
+                                            />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is your article title.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
                             />
-                        </div>
-                    </form>
-                </Form>
+                            <FormField
+                                control={form.control}
+                                name="content"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>
+                                            Content{" "}
+                                            <span className="text-destructive">
+                                                *
+                                            </span>
+                                        </FormLabel>
+                                        <FormControl>
+                                            <RTEContent {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            This is your article content.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <div className="h-1" />
+                            <div className="w-max ml-auto">
+                                <FormButton
+                                    size="default"
+                                    isSubmitting={isPending}
+                                    isValid={form.formState.isValid}
+                                    label="Create article"
+                                    submittingLabel="Creating article"
+                                />
+                            </div>
+                        </form>
+                    </Form>
+                </ScrollArea>
             </SheetContent>
         </Sheet>
     );

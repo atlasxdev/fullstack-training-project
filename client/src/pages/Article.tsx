@@ -82,8 +82,12 @@ function Article() {
                             </CardTitle>
                             <Separator className="mt-6" />
                         </CardHeader>
-                        <CardContent className="text-balance -tracking-tighter text-sm md:text-base">
-                            {data.data.article.content}
+                        <CardContent>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: data.data.article.content,
+                                }}
+                            />
                         </CardContent>
                     </Card>
                 </article>
