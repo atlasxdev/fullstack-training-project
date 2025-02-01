@@ -16,13 +16,13 @@ export default function Article({ id, title, date_created }: Article) {
                 <Card className="hover:border-muted-foreground rounded-xl">
                     <CardHeader>
                         <div className="flex justify-between mb-2">
-                            <CardDescription className="text-xs uppercase tracking-widest">
+                            <CardDescription className="text-xs font-medium uppercase tracking-widest">
                                 {format(
                                     new Date(date_created),
                                     "EEEE, MMMM d, yyyy"
                                 )}
                             </CardDescription>
-                            <CardDescription className="text-xs">
+                            <CardDescription className="text-xs font-medium">
                                 {formatDistanceToNow(new Date(date_created), {
                                     addSuffix: true,
                                 })}

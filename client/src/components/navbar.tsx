@@ -4,8 +4,20 @@ import { ModeToggle } from "./mode-toggle";
 import { Button, buttonVariants } from "./ui/button";
 import { useSession } from "@/hooks/use-session";
 import { cn } from "@/lib/utils";
-import { BookOpenIcon, LogOutIcon, SettingsIcon } from "lucide-react";
+import {
+    BookOpenIcon,
+    EllipsisVerticalIcon,
+    LogOutIcon,
+    SettingsIcon,
+} from "lucide-react";
 import supabase from "@/supabase";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function Navbar() {
     const { session } = useSession();
@@ -28,7 +40,7 @@ function PublicNavbar() {
                                 src="/article-hub.png"
                                 className="size-10"
                             />
-                            <span className="font-bold">
+                            <span className="hidden md:inline-block font-bold">
                                 Article<span className="text-primary">Hub</span>
                             </span>
                         </div>
@@ -87,15 +99,16 @@ function UserNavbar() {
                                 className="size-8"
                                 src="/article-hub.png"
                             />
-                            <span className="text-sm">/</span>
-                            <div className="flex items-center gap-2">
+                            <span className="hidden md:inline-block text-sm">
+                                /
+                            </span>
+                            <div className="hidden md:flex items-center gap-2">
                                 <p className="text-sm -tracking-tighter">
-                                    {" "}
                                     {session?.user.user_metadata.username}
                                 </p>
                             </div>
                         </Link>
-                        <div className="flex items-center justify-center gap-6">
+                        <div className="hidden md:flex items-center justify-center gap-6">
                             <NavLink
                                 to={"/home"}
                                 className={({
@@ -144,7 +157,7 @@ function UserNavbar() {
                             </NavLink>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center gap-4">
+                    <div className="hidden md:flex items-center justify-center gap-4">
                         <ModeToggle />
                         <Button
                             onClick={signOut}
@@ -155,6 +168,49 @@ function UserNavbar() {
                             Logout
                             <LogOutIcon className="size-5" />
                         </Button>
+                    </div>
+                    <div className="flex md:hidden items-center gap-2">
+                        <ModeToggle />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant={"ghost"} size={"icon"}>
+                                    <EllipsisVerticalIcon className="size-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-72 mr-8">
+                                <DropdownMenuItem className="px-4 py-3">
+                                    <NavLink
+                                        className="w-full cursor-pointer flex justify-between"
+                                        to={"/home"}
+                                    >
+                                        <p className="text-sm -tracking-tighter">
+                                            Your Articles
+                                        </p>
+                                        <BookOpenIcon className="size-4" />
+                                    </NavLink>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="px-4 py-3">
+                                    <NavLink
+                                        className="w-full cursor-pointer flex justify-between"
+                                        to={"/account-settings"}
+                                    >
+                                        <p className="text-sm -tracking-tighter">
+                                            Account Settings
+                                        </p>
+                                        <SettingsIcon className="size-4" />
+                                    </NavLink>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+
+                                <DropdownMenuItem
+                                    className="focus:text-red-600 cursor-pointer flex justify-between text-destructive px-4 py-3"
+                                    onClick={signOut}
+                                >
+                                    Logout
+                                    <LogOutIcon />
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </div>
             </MaxWidthWrapper>

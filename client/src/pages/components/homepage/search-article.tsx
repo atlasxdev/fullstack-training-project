@@ -5,12 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAxiosInstance } from "@/api/axios-instance";
 import type { Articles } from "@/types";
 import { cn } from "@/lib/utils";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SearchIcon } from "lucide-react";
 import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
@@ -18,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import SearchResult from "./search-result";
+import { Badge } from "@/components/ui/badge";
 tailspin.register();
 
 function SearchArticle() {
@@ -96,7 +92,7 @@ function SearchArticle() {
                 {isFetched && (
                     <Card
                         className={cn(
-                            "animate-in fade-in-0 zoom-in-95 absolute -bottom-[330px] inset-x-0 h-80 w-3/4 mx-auto bg-background",
+                            "animate-in fade-in-0 zoom-in-95 absolute -bottom-[330px] inset-x-0 h-80 w-full md:w-3/4 mx-auto bg-background",
                             {
                                 hidden: !isFocused,
                             }
@@ -111,7 +107,7 @@ function SearchArticle() {
                                 }
                             />
                             <Separator />
-                            <CardContent className="pt-6 flex flex-col gap-4 justify-center items-center">
+                            <CardContent className=" pt-6 grid grid-cols-1 gap-6 items-start justify-start md:justify-center md:items-center">
                                 {data?.pages.flatMap((page) =>
                                     page.data.articles.map((article) => (
                                         <SearchResult
@@ -124,6 +120,7 @@ function SearchArticle() {
                                     <Button
                                         size={"sm"}
                                         disabled={isFetching}
+                                        className="w-max mx-auto"
                                         onClick={() => fetchNextPage()}
                                     >
                                         {isFetching
@@ -136,9 +133,9 @@ function SearchArticle() {
                                         <img
                                             alt="no articles image"
                                             src="/no-articles.png"
-                                            className="size-24 mx-auto"
+                                            className="size-20 md:size-24 mx-auto"
                                         />
-                                        <p className="text-sm font-semibold text-center -tracking-tighter">
+                                        <p className="text-xs md:text-sm font-semibold text-center -tracking-tighter">
                                             {error.response?.data}
                                         </p>
                                     </div>
@@ -148,7 +145,7 @@ function SearchArticle() {
                     </Card>
                 )}
             </div>
-            <AddArticleSheet label="Add new article" />
+            <AddArticleSheet label="New article" />
         </div>
     );
 }
@@ -156,9 +153,12 @@ function SearchArticle() {
 function SearchCount({ length }: { length: number }) {
     return (
         <CardHeader>
-            <CardDescription className="text-xs font-bold">
+            <Badge
+                variant={"secondary"}
+                className="text-[0.7rem] w-max rounded-full"
+            >
                 Articles found: {length}
-            </CardDescription>
+            </Badge>
         </CardHeader>
     );
 }

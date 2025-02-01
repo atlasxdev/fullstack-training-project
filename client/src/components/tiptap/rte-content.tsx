@@ -3,6 +3,7 @@ import RichTextEditor, {
     BaseKit,
     Bold,
     BulletList,
+    OrderedList,
     Heading,
     Italic,
     TextAlign,
@@ -18,6 +19,7 @@ const extensions = [
     Italic,
     Bold,
     BulletList,
+    OrderedList,
     TextAlign.configure({ types: ["heading", "paragraph"], spacer: true }),
     Color.configure({ spacer: true }),
     Underline,
@@ -36,13 +38,12 @@ function RTEContent({
     "content"
 >) {
     return (
-        <div className="mx-auto max-w-[500px]">
+        <div className="max-w-[420px] mx-auto md:max-w-[500px]">
             <RichTextEditor
                 output="html"
                 content={value}
                 onChangeContent={onChange}
                 extensions={extensions}
-                hideBubble={true}
                 {...props}
             />
         </div>

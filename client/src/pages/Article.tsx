@@ -16,6 +16,7 @@ import Loading from "./components/article/loading";
 import NotFound from "./NotFound";
 import DeleteArticleDialog from "./components/article/delete-article-dialog";
 import EditArticleSheet from "./components/article/edit-article-sheet";
+import { Badge } from "@/components/ui/badge";
 
 function Article() {
     const axiosInstance = useAxiosInstance();
@@ -43,21 +44,37 @@ function Article() {
     }
 
     return (
-        <section className="h-screen py-8 bg-background">
+        <section className="min-h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
-                <div className="w-max ml-auto space-x-4">
-                    <EditArticleSheet
-                        articleId={params.id}
-                        title={data.data.article.title}
-                        content={data.data.article.content}
-                    />
-                    <DeleteArticleDialog articleId={params.id} />
+                <div className="flex justify-between items-center">
+                    {data.data.article.date_updated && (
+                        <Badge
+                            variant={"secondary"}
+                            className="text-[0.7rem] rounded-full"
+                        >
+                            Edited{" "}
+                            {formatDistanceToNow(
+                                new Date(data.data.article.date_updated),
+                                {
+                                    addSuffix: true,
+                                }
+                            )}
+                        </Badge>
+                    )}
+                    <div className="flex items-center space-x-4">
+                        <EditArticleSheet
+                            articleId={params.id}
+                            title={data.data.article.title}
+                            content={data.data.article.content}
+                        />
+                        <DeleteArticleDialog articleId={params.id} />
+                    </div>
                 </div>
                 <article>
                     <Card className="rounded-xl shadow-xl overflow-hidden">
                         <CardHeader>
                             <div className="flex justify-between mb-2">
-                                <CardDescription className="text-xs uppercase tracking-widest">
+                                <CardDescription className="text-xs font-medium uppercase tracking-widest">
                                     {format(
                                         new Date(
                                             data.data.article.date_created
@@ -65,7 +82,8 @@ function Article() {
                                         "EEEE, MMMM d, yyyy"
                                     )}
                                 </CardDescription>
-                                <CardDescription className="text-xs">
+
+                                <CardDescription className="text-xs font-medium">
                                     {formatDistanceToNow(
                                         new Date(
                                             data.data.article.date_created
@@ -77,13 +95,14 @@ function Article() {
                                 </CardDescription>
                             </div>
                             <Separator />
-                            <CardTitle className="py-4 text-center truncate w-full capitalize font-serif text-2xl md:text-4xl font-bold mb-4 leading-tight">
+                            <CardTitle className="py-4 text-center w-full capitalize font-serif text-2xl md:text-4xl font-bold mb-4 leading-tight">
                                 {data.data.article.title}
                             </CardTitle>
                             <Separator className="mt-6" />
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="md:px-10 md:pb-6">
                             <div
+                                id="article-content"
                                 dangerouslySetInnerHTML={{
                                     __html: data.data.article.content,
                                 }}

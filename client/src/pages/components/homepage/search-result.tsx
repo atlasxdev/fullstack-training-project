@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 
 function SearchResult({ id, date_created, title }: Article) {
     return (
-        <Link key={id} to={`/articles/${id}`} className="w-full">
+        <Link key={id} to={`/articles/${id}`}>
             <Card className="w-full hover:border-muted-foreground">
                 <CardHeader>
                     <div className="flex justify-between mb-2">
@@ -21,14 +21,14 @@ function SearchResult({ id, date_created, title }: Article) {
                                 "EEEE, MMMM d, yyyy"
                             )}
                         </CardDescription>
-                        <CardDescription className="text-xs">
+                        <CardDescription className="hidden md:block text-xs">
                             {formatDistanceToNow(new Date(date_created), {
                                 addSuffix: true,
                             })}
                         </CardDescription>
                     </div>
                     <Separator />
-                    <CardTitle className="py-2 text-center truncate w-full capitalize font-serif text-xl font-bold mb-4 leading-tight">
+                    <CardTitle className="py-2 text-center truncate w-full capitalize font-serif text-base md:text-xl font-bold mb-4 leading-tight">
                         {title}
                     </CardTitle>
                     <Separator className="mt-6" />

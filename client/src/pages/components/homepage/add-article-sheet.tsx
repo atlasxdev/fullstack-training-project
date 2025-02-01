@@ -109,7 +109,7 @@ function AddArticleSheet({ label }: { label: string }) {
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                className="max-w-[500px] mx-auto"
+                                                className="max-w-[420px] md:max-w-[500px] mx-auto"
                                                 autoFocus
                                                 type=""
                                                 {...field}

@@ -1,4 +1,4 @@
-import MaxWidthWrapper from "./max-width-wrapper";
+import MaxWidthWrapper from "../../../components/max-width-wrapper";
 
 function Footer() {
     return (

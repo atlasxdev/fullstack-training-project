@@ -58,7 +58,7 @@ function DeleteArticleDialog({ articleId }: { articleId: string }) {
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button className="gap-2" variant={"destructive"}>
+                <Button className="gap-2" size={"sm"} variant={"destructive"}>
                     Delete
                     <Trash2Icon />
                 </Button>

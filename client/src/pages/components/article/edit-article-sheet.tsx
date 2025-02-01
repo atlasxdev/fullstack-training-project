@@ -89,7 +89,7 @@ function EditArticleSheet({
     return (
         <Sheet open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
             <SheetTrigger asChild>
-                <Button className="gap-2" variant={"outline"}>
+                <Button className="gap-2" size={"sm"} variant={"outline"}>
                     Edit
                     <PencilRulerIcon />
                 </Button>
@@ -120,9 +120,8 @@ function EditArticleSheet({
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                className="max-w-[500px] mx-auto"
+                                                className="max-w-[420px] md:max-w-[500px] mx-auto"
                                                 autoFocus
-                                                type=""
                                                 {...field}
                                             />
                                         </FormControl>

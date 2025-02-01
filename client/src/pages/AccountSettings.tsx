@@ -4,10 +4,10 @@ import UpdateUsername from "./components/account-settings/update-username";
 
 function AccountSettings() {
     return (
-        <section className="h-screen py-8 bg-background">
+        <section className="py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
                 <header>
-                    <h1 className="font-bold text-3xl -tracking-tighter">
+                    <h1 className="font-bold text-2xl md:text-3xl -tracking-tighter">
                         Account settings
                     </h1>
                 </header>

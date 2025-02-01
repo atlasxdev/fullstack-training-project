@@ -1,5 +1,5 @@
-import Welcome from "@/pages/Welcome";
-import Footer from "@/components/footer";
+import Welcome from "@/pages/components/index/Welcome";
+import Footer from "@/pages/components/index/Footer";
 
 function Index() {
     return (

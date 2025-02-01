@@ -45,7 +45,7 @@ function UpdateUsername() {
                                 <FormControl>
                                     <Input
                                         {...field}
-                                        className="w-2/4 text-sm -tracking-tighter"
+                                        className="w-full md:w-2/4 text-sm -tracking-tighter"
                                     />
                                 </FormControl>
                                 <FormDescription>
