@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 function Welcome() {
     return (
-        <section className="h-screen flex flex-col items-center justify-center gap-6">
+        <section className="flex-1 flex flex-col items-center justify-center gap-6">
             <MaxWidthWrapper>
                 <BackgroundLines className="flex items-center justify-center w-full">
                     <header className="flex items-center justify-center flex-col mx-auto w-3/4 space-y-6">

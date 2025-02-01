@@ -4,7 +4,7 @@ import UpdateUsername from "./components/account-settings/update-username";
 
 function AccountSettings() {
     return (
-        <section className="py-8 bg-secondary dark:bg-background">
+        <section className="h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
                 <header>
                     <h1 className="font-bold text-3xl -tracking-tighter">
@@ -12,7 +12,7 @@ function AccountSettings() {
                     </h1>
                 </header>
 
-                <Card className="border rounded-lg">
+                <Card className="rounded-xl shadow-xl overflow-hidden">
                     <CardHeader className="border-b bg-secondary">
                         <CardTitle className="font-normal -tracking-tighter">
                             Display Name

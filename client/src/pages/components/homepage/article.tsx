@@ -13,7 +13,7 @@ export default function Article({ id, title, date_created }: Article) {
     return (
         <Link to={`/articles/${id}`}>
             <article>
-                <Card className="hover:border-muted-foreground">
+                <Card className="hover:border-muted-foreground rounded-xl">
                     <CardHeader>
                         <div className="flex justify-between mb-2">
                             <CardDescription className="text-xs uppercase tracking-widest">

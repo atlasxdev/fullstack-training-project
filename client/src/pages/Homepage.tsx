@@ -3,7 +3,7 @@ import Articles from "./components/homepage/articles";
 
 function Homepage() {
     return (
-        <section className="py-8 bg-secondary dark:bg-background">
+        <section className="h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
                 <header>
                     <h1 className="font-bold text-3xl -tracking-tighter">

@@ -43,7 +43,7 @@ function Article() {
     }
 
     return (
-        <section className="py-8 bg-secondary dark:bg-background">
+        <section className="h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
                 <div className="w-max ml-auto space-x-4">
                     <EditArticleSheet
@@ -54,7 +54,7 @@ function Article() {
                     <DeleteArticleDialog articleId={params.id} />
                 </div>
                 <article>
-                    <Card>
+                    <Card className="rounded-xl shadow-xl overflow-hidden">
                         <CardHeader>
                             <div className="flex justify-between mb-2">
                                 <CardDescription className="text-xs uppercase tracking-widest">
