@@ -102,8 +102,7 @@ h6 {
     font-size: 1rem;
 } /* 16px */
 
-#article-content > ul,
-ol {
+#article-content > ul ol {
     margin-top: 1em; /* 16px if base font size is 16px */
     margin-bottom: 1em; /* 16px */
     margin-left: 40px; /* Indentation for bullets */

@@ -66,6 +66,7 @@ function CreateArticle() {
             });
         },
         onSettled() {
+            toast.dismiss();
             queryClient.invalidateQueries({
                 queryKey: ["articles"],
                 type: "all",

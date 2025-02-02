@@ -28,7 +28,7 @@ function NoArticles() {
                     className="size-56 object-cover"
                 />
                 <Button onClick={() => navigateToCreateArticle()}>
-                    New article
+                    Create a new article
                 </Button>
             </CardHeader>
         </Card>
