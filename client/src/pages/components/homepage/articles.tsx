@@ -8,6 +8,8 @@ import { useIntersectionObserver } from "usehooks-ts";
 import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
 import Loading from "./loading";
+import { buttonVariants } from "@/components/ui/button";
+import { Link } from "react-router";
 tailspin.register();
 
 function Articles() {
@@ -52,7 +54,17 @@ function Articles() {
     return (
         <>
             <section className="space-y-8">
-                <SearchArticle />
+                <div className="flex items-center space-x-4">
+                    <SearchArticle />
+                    <Link
+                        to={"/create-article"}
+                        className={buttonVariants({
+                            variant: "default",
+                        })}
+                    >
+                        New article
+                    </Link>
+                </div>
                 <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                     {data.pages.flatMap((page) =>
                         page.data.articles.map((article) => (

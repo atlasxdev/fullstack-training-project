@@ -3,15 +3,7 @@ import MaxWidthWrapper from "@/components/max-width-wrapper";
 import type { Article } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { format, formatDistanceToNow } from "date-fns";
-import { Separator } from "@/components/ui/separator";
+import { formatDistanceToNow } from "date-fns";
 import Loading from "./components/article/loading";
 import NotFound from "./NotFound";
 import DeleteArticleDialog from "./components/article/delete-article-dialog";
@@ -20,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useState, useTransition } from "react";
 import SwitchModeLoading from "./components/article/switch-mode-loading";
+import ViewArticle from "./components/article/view-article";
 
 function Article() {
     const [isTransitioning, startTransition] = useTransition();
@@ -62,10 +55,10 @@ function Article() {
         <section className="min-h-screen py-8 bg-background">
             <MaxWidthWrapper className="max-w-screen-xl space-y-6">
                 <div className="flex items-center">
-                    {data.data.article.date_updated && (
+                    {data.data.article.date_updated != null && (
                         <Badge
                             variant={"secondary"}
-                            className="text-[0.7rem] rounded-full"
+                            className="hidden md:block text-[0.7rem] rounded-full"
                         >
                             Edited{" "}
                             {formatDistanceToNow(
@@ -76,67 +69,30 @@ function Article() {
                             )}
                         </Badge>
                     )}
-                    <div className="w-max ml-auto flex items-center space-x-4">
+                    <div className="w-full md:w-max md:ml-auto flex items-center justify-between md:space-x-4">
                         <div className="flex items-center space-x-4">
-                            <p className="text-xs -tracking-tighter text-accent-foreground">
-                                Switch to edit mode
+                            <p className="text-[0.7rem] font-medium -tracking-tighter text-accent-foreground">
+                                Switch to {isInEditMode ? "view" : "edit"} mode
                             </p>
                             <Switch
                                 checked={isInEditMode}
                                 onCheckedChange={switchMode}
                             />
                         </div>
-                        <DeleteArticleDialog articleId={params.id} />
+
+                        {!isInEditMode && (
+                            <DeleteArticleDialog articleId={params.id} />
+                        )}
                     </div>
                 </div>
-                {isInEditMode && (
+                {isInEditMode ? (
                     <EditArticle
                         articleId={params.id}
                         title={data.data.article.title}
                         content={data.data.article.content}
                     />
-                )}
-                {!isInEditMode && (
-                    <article>
-                        <Card className="rounded-xl shadow-xl overflow-hidden">
-                            <CardHeader>
-                                <div className="flex justify-between mb-2">
-                                    <CardDescription className="text-xs font-medium uppercase tracking-widest">
-                                        {format(
-                                            new Date(
-                                                data.data.article.date_created
-                                            ),
-                                            "EEEE, MMMM d, yyyy"
-                                        )}
-                                    </CardDescription>
-
-                                    <CardDescription className="text-xs font-medium">
-                                        {formatDistanceToNow(
-                                            new Date(
-                                                data.data.article.date_created
-                                            ),
-                                            {
-                                                addSuffix: true,
-                                            }
-                                        )}
-                                    </CardDescription>
-                                </div>
-                                <Separator />
-                                <CardTitle className="py-4 text-center w-full capitalize font-serif text-2xl md:text-4xl font-bold mb-4 leading-tight">
-                                    {data.data.article.title}
-                                </CardTitle>
-                                <Separator className="mt-6" />
-                            </CardHeader>
-                            <CardContent className="md:px-10 md:pb-6">
-                                <div
-                                    id="article-content"
-                                    dangerouslySetInnerHTML={{
-                                        __html: data.data.article.content,
-                                    }}
-                                />
-                            </CardContent>
-                        </Card>
-                    </article>
+                ) : (
+                    <ViewArticle {...data.data.article} />
                 )}
             </MaxWidthWrapper>
         </section>

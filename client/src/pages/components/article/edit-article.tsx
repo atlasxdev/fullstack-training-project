@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { sanitizeArticleContent } from "@/lib/utils";
 import RTEContent from "@/components/tiptap/rte-content";
 import { useEffect } from "react";
+import { PencilRulerIcon } from "lucide-react";
 
 function EditArticle({
     articleId,
@@ -98,7 +99,10 @@ function EditArticle({
         <article>
             <Card className="rounded-xl shadow-xl overflow-hidden">
                 <CardHeader>
-                    <CardTitle>You're in Edit mode</CardTitle>
+                    <div className="flex space-x-2 items-center">
+                        <CardTitle>You're in Edit mode</CardTitle>
+                        <PencilRulerIcon className="size-4" />
+                    </div>
                     <CardDescription>
                         Edit your article here. Click "Save changes" below when
                         you're done.

@@ -9,11 +9,10 @@ import { SearchIcon } from "lucide-react";
 import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import SearchResult from "./search-result";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router";
 tailspin.register();
 
 function SearchArticle() {
@@ -69,7 +68,7 @@ function SearchArticle() {
     }, []);
 
     return (
-        <div ref={dropdownRef} className="flex items-center space-x-4">
+        <div ref={dropdownRef} className="w-full">
             <div className="w-full relative">
                 <SearchIcon className="absolute left-2.5 top-2 size-5" />
                 <Input
@@ -145,14 +144,6 @@ function SearchArticle() {
                     </Card>
                 )}
             </div>
-            <Link
-                to={"/create-article"}
-                className={buttonVariants({
-                    variant: "default",
-                })}
-            >
-                New article
-            </Link>
         </div>
     );
 }

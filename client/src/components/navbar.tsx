@@ -30,7 +30,7 @@ function Navbar() {
 
 function PublicNavbar() {
     return (
-        <nav className="sticky top-0 z-10 inset-x-0 border-b backdrop-blur-md">
+        <nav className="sticky top-0 z-20 border-b backdrop-blur-md bg-background/70">
             <MaxWidthWrapper>
                 <div className="py-4 md:py-6 flex items-center justify-between">
                     <Link to={"/"}>
@@ -86,7 +86,7 @@ function UserNavbar() {
     }
 
     return (
-        <nav className="sticky top-0 z-20 backdrop-blur-md border-b">
+        <nav className="sticky top-0 z-20 backdrop-blur-md bg-background/70 border-b">
             <MaxWidthWrapper>
                 <div className="w-full flex items-center justify-between py-4">
                     <div className="flex items-center justify-center gap-10">
