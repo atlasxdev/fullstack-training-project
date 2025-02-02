@@ -8,11 +8,15 @@ import { useIntersectionObserver } from "usehooks-ts";
 import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
 import Loading from "./loading";
-import { buttonVariants } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
+import { useTransition } from "react";
+import EditorLoader from "./editor-loader";
 tailspin.register();
 
 function Articles() {
+    const navigate = useNavigate();
+    const [isNavigating, setTransition] = useTransition();
     const axiosInstance = useAxiosInstance();
     const { isIntersecting, ref } = useIntersectionObserver({
         threshold: 0.5,
@@ -51,19 +55,24 @@ function Articles() {
         return <NoArticles />;
     }
 
+    if (isNavigating) {
+        return <EditorLoader />;
+    }
+
+    function navigateToCreateArticle() {
+        setTransition(() => {
+            navigate("/create-article");
+        });
+    }
+
     return (
         <>
             <section className="space-y-8">
                 <div className="flex items-center space-x-4">
                     <SearchArticle />
-                    <Link
-                        to={"/create-article"}
-                        className={buttonVariants({
-                            variant: "default",
-                        })}
-                    >
+                    <Button onClick={() => navigateToCreateArticle()}>
                         New article
-                    </Link>
+                    </Button>
                 </div>
                 <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                     {data.pages.flatMap((page) =>

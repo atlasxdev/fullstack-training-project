@@ -2,12 +2,12 @@ import { hourglass } from "ldrs";
 
 hourglass.register();
 
-function SwitchModeLoading() {
+function EditorLoader() {
     return (
         <section className="py-8">
             <div className="max-h-[768px] h-screen flex flex-col items-center justify-center space-y-6">
                 <p className="animate-pulse font-medium -tracking-tighter text-sm">
-                    Switching mode...
+                    Loading editor...
                 </p>
                 <l-hourglass
                     size="50"
@@ -20,4 +20,4 @@ function SwitchModeLoading() {
     );
 }
 
-export default SwitchModeLoading;
+export default EditorLoader;
