@@ -18,7 +18,7 @@ const users = new Hono()
     .get("/", async (c) => {
         const userId = getBearerToken(c);
         const page = parseInt(c.req.query("page") ?? "1");
-        const LIMIT = 15;
+        const LIMIT = 10;
 
         if (page < 1) {
             throw new BadRequestError("Invalid page param");
@@ -48,7 +48,7 @@ const users = new Hono()
         const userId = getBearerToken(c);
         const page = parseInt(c.req.query("page") ?? "1");
         const searchKeyword = c.req.query("keyword");
-        const LIMIT = 15;
+        const LIMIT = 10;
 
         if (page < 1) {
             throw new BadRequestError("Invalid page param");
@@ -101,7 +101,7 @@ const users = new Hono()
         const body = c.req.valid("json");
         const userId = getBearerToken(c);
 
-        await directusClient.request(
+        const article = await directusClient.request(
             createItem("articles", {
                 ...body,
                 user_id: userId,
@@ -109,7 +109,10 @@ const users = new Hono()
         );
 
         c.status(StatusCodes.CREATED);
-        return c.json({ message: "Article has been created." });
+        return c.json({
+            message: "Article has been created.",
+            articleId: article.id,
+        });
     })
     .patch("/:articleId", validateBody("json", articleSchema), async (c) => {
         const articleId = c.req.param("articleId");
