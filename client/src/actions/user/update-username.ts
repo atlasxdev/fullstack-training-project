@@ -6,6 +6,15 @@ export async function updateUsername({ username }: TUsername) {
     try {
         const { data } = await supabase.auth.getUser();
 
+        const { data: usernameExist } = await supabase
+            .from("users")
+            .select("username")
+            .eq("username", username);
+
+        if (usernameExist?.length) {
+            throw new Error("Username already exist");
+        }
+
         const [promise1, promise2] = await Promise.allSettled([
             supabase.auth.updateUser({
                 data: {
@@ -26,7 +35,7 @@ export async function updateUsername({ username }: TUsername) {
 
         toast.success("Username has been updated");
     } catch (error) {
-        toast.error(error as string);
+        toast.error((error as Error).message);
     } finally {
         toast.dismiss();
     }
