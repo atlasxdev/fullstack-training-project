@@ -10,11 +10,16 @@ import RichTextEditor, {
     Underline,
     Highlight,
     Color,
+    SlashCommand,
 } from "reactjs-tiptap-editor";
 import { ControllerRenderProps } from "react-hook-form";
+import MaxWidthWrapper from "../max-width-wrapper";
+import { useTheme } from "../theme-provider";
 
 const extensions = [
-    BaseKit,
+    BaseKit.configure({
+        characterCount: false,
+    }),
     Heading,
     Italic,
     Bold,
@@ -24,6 +29,7 @@ const extensions = [
     Color.configure({ spacer: true }),
     Underline,
     Highlight,
+    SlashCommand,
 ];
 
 function RTEContent({
@@ -37,16 +43,19 @@ function RTEContent({
     },
     "content"
 >) {
+    const { theme } = useTheme();
+
     return (
-        <div className="max-w-[420px] mx-auto md:max-w-[500px]">
+        <MaxWidthWrapper className="max-w-6xl !px-0 md:!px-0">
             <RichTextEditor
                 output="html"
                 content={value}
                 onChangeContent={onChange}
                 extensions={extensions}
+                dark={theme == "dark" || theme == "system"}
                 {...props}
             />
-        </div>
+        </MaxWidthWrapper>
     );
 }
 

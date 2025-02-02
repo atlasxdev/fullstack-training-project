@@ -74,10 +74,6 @@ body {
     }
 }
 
-.tiptap.ProseMirror {
-    padding: 1rem 1.5rem !important;
-}
-
 #article-content > h1,
 h2,
 h3,

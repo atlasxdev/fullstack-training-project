@@ -1,5 +1,4 @@
 import { Input } from "@/components/ui/input";
-import AddArticleSheet from "./add-article-sheet";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useAxiosInstance } from "@/api/axios-instance";
@@ -10,10 +9,11 @@ import { SearchIcon } from "lucide-react";
 import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import SearchResult from "./search-result";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router";
 tailspin.register();
 
 function SearchArticle() {
@@ -145,7 +145,14 @@ function SearchArticle() {
                     </Card>
                 )}
             </div>
-            <AddArticleSheet label="New article" />
+            <Link
+                to={"/create-article"}
+                className={buttonVariants({
+                    variant: "default",
+                })}
+            >
+                New article
+            </Link>
         </div>
     );
 }

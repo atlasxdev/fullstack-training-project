@@ -9,6 +9,7 @@ import Navbar from "./components/navbar.tsx";
 import NotFound from "@/pages/NotFound.tsx";
 import Index from "./index.tsx";
 import Article from "./pages/Article.tsx";
+import CreateArticle from "./pages/CreateArticle.tsx";
 
 function App() {
     return (
@@ -50,6 +51,16 @@ function App() {
                         </AuthGate>
                     }
                 />
+
+                <Route
+                    path="/create-article"
+                    element={
+                        <AuthGate>
+                            <CreateArticle />
+                        </AuthGate>
+                    }
+                />
+
                 <Route
                     path="/account-settings"
                     element={

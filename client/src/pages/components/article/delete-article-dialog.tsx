@@ -46,6 +46,7 @@ function DeleteArticleDialog({ articleId }: { articleId: string }) {
             });
             queryClient.invalidateQueries({
                 queryKey: ["articles"],
+                type: "all",
             });
         },
     });
@@ -68,8 +69,10 @@ function DeleteArticleDialog({ articleId }: { articleId: string }) {
                     <AlertDialogTitle>Delete Article</AlertDialogTitle>
                     <AlertDialogDescription>
                         Please type{" "}
-                        <span className="font-bold">Delete article</span> to
-                        delete this article. After deletion, it can not be
+                        <span className="font-bold text-black dark:text-white">
+                            Delete article
+                        </span>{" "}
+                        to delete this article. After deletion, it can not be
                         recovered.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
@@ -90,7 +93,9 @@ function DeleteArticleDialog({ articleId }: { articleId: string }) {
                     </AlertDialogCancel>
                     <Button
                         onClick={deleteArticle}
-                        disabled={confirmation !== CONFIRMATION_TEXT}
+                        disabled={
+                            isPending || confirmation !== CONFIRMATION_TEXT
+                        }
                         className="w-full gap-2"
                         variant={"destructive"}
                         size={"lg"}

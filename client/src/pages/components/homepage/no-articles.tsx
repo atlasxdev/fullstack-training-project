@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import AddArticleSheet from "./add-article-sheet";
+import { Link } from "react-router";
+import { buttonVariants } from "@/components/ui/button";
 
 function NoArticles() {
     return (
@@ -11,7 +12,14 @@ function NoArticles() {
                     src="/no-articles.png"
                     className="size-56 object-cover"
                 />
-                <AddArticleSheet label="Create a new article" />
+                <Link
+                    to={"/create-article"}
+                    className={buttonVariants({
+                        variant: "default",
+                    })}
+                >
+                    Create a new article
+                </Link>
             </CardHeader>
         </Card>
     );

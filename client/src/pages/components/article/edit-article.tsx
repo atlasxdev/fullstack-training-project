@@ -1,5 +1,4 @@
 import { useAxiosInstance } from "@/api/axios-instance";
-import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
@@ -12,25 +11,22 @@ import {
 import FormButton from "@/components/ui/form-button";
 import { Input } from "@/components/ui/input";
 import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet";
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 import { TArticle, zodArticleSchema } from "@/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { PencilRulerIcon } from "lucide-react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { sanitizeArticleContent } from "@/lib/utils";
 import RTEContent from "@/components/tiptap/rte-content";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { useEffect } from "react";
 
-function EditArticleSheet({
+function EditArticle({
     articleId,
     title,
     content,
@@ -39,7 +35,6 @@ function EditArticleSheet({
     title: string;
     content: string;
 }) {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
     const queryClient = useQueryClient();
     const axiosInstance = useAxiosInstance();
     const form = useForm<TArticle>({
@@ -64,7 +59,6 @@ function EditArticleSheet({
             toast.success(message, {
                 description: "Check it out",
             });
-            setIsOpen(false);
         },
         onError({ message }) {
             toast.error(message, {
@@ -81,31 +75,40 @@ function EditArticleSheet({
         },
     });
 
+    useEffect(() => {
+        const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+            event.preventDefault();
+            event.returnValue =
+                "You have unsaved changes. Are you sure you want to leave?";
+        };
+
+        window.addEventListener("beforeunload", handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
+
     function updateArticle(data: TArticle) {
         const sanitizedContent = sanitizeArticleContent(data.content);
         mutate({ ...data, content: sanitizedContent });
     }
 
     return (
-        <Sheet open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
-            <SheetTrigger asChild>
-                <Button className="gap-2" size={"sm"} variant={"outline"}>
-                    Edit
-                    <PencilRulerIcon />
-                </Button>
-            </SheetTrigger>
-            <SheetContent>
-                <SheetHeader>
-                    <SheetTitle>Edit article</SheetTitle>
-                    <SheetDescription>
-                        Edit your article here. Click save when you're done.
-                    </SheetDescription>
-                </SheetHeader>
-                <ScrollArea className="pr-4 h-[85vh]">
+        <article>
+            <Card className="rounded-xl shadow-xl overflow-hidden">
+                <CardHeader>
+                    <CardTitle>You're in Edit mode</CardTitle>
+                    <CardDescription>
+                        Edit your article here. Click "Save changes" below when
+                        you're done.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
                     <Form {...form}>
                         <form
                             onSubmit={form.handleSubmit(updateArticle)}
-                            className="grid gap-4 py-4"
+                            className="grid gap-4 "
                         >
                             <FormField
                                 control={form.control}
@@ -120,8 +123,8 @@ function EditArticleSheet({
                                         </FormLabel>
                                         <FormControl>
                                             <Input
-                                                className="max-w-[420px] md:max-w-[500px] mx-auto"
                                                 autoFocus
+                                                type=""
                                                 {...field}
                                             />
                                         </FormControl>
@@ -153,22 +156,23 @@ function EditArticleSheet({
                                     </FormItem>
                                 )}
                             />
+
                             <div className="h-1" />
                             <div className="w-max ml-auto">
                                 <FormButton
                                     size="default"
                                     isSubmitting={isPending}
                                     isValid={form.formState.isValid}
-                                    label="Edit article"
-                                    submittingLabel="Updating article"
+                                    label="Save changes"
+                                    submittingLabel="Saving changes"
                                 />
                             </div>
                         </form>
                     </Form>
-                </ScrollArea>
-            </SheetContent>
-        </Sheet>
+                </CardContent>
+            </Card>
+        </article>
     );
 }
 
-export default EditArticleSheet;
+export default EditArticle;
