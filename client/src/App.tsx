@@ -2,8 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import AuthGate from "@/routes/AuthGate.tsx";
 import Homepage from "@/pages/Homepage.tsx";
 import PublicRoute from "@/routes/PublicRoute.tsx";
-import SignInPage from "./pages/auth/SignInPage.tsx";
-import SignUpPage from "./pages/auth/SignUpPage.tsx";
+import SignIn from "./pages/auth/SignIn.tsx";
+import SignUp from "./pages/auth/SignUp.tsx";
 import AccountSettings from "./pages/AccountSettings.tsx";
 import Navbar from "./components/navbar.tsx";
 import NotFound from "@/pages/NotFound.tsx";
@@ -29,7 +29,7 @@ function App() {
                     path="/sign-in"
                     element={
                         <PublicRoute>
-                            <SignInPage />
+                            <SignIn />
                         </PublicRoute>
                     }
                 />
@@ -38,7 +38,7 @@ function App() {
                     path="/sign-up"
                     element={
                         <PublicRoute>
-                            <SignUpPage />
+                            <SignUp />
                         </PublicRoute>
                     }
                 />

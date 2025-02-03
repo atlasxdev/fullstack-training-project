@@ -66,7 +66,7 @@ function UpdateUsername() {
                                     form.getValues("username")
                             }
                             label="Save"
-                            submittingLabel="Saving..."
+                            submittingLabel="Saving"
                         />
                     </div>
                 </form>

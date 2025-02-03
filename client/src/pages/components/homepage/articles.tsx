@@ -43,7 +43,12 @@ function Articles() {
         retry: 1,
     });
 
-    if (isIntersecting && !isError) {
+    if (
+        isIntersecting &&
+        !isError &&
+        data?.pages != null &&
+        data.pages.flatMap((page) => page.data.articles).length >= 10
+    ) {
         fetchNextPage();
     }
 

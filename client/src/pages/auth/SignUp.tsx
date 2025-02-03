@@ -28,7 +28,7 @@ import FormButton from "@/components/ui/form-button";
 import { signUp } from "@/actions/auth/sign-up";
 import { useEffect } from "react";
 
-function SignUpPage() {
+function SignUp() {
     const form = useForm<TSignUp>({
         mode: "onChange",
         defaultValues: {
@@ -168,4 +168,4 @@ function SignUpPage() {
     );
 }
 
-export default SignUpPage;
+export default SignUp;

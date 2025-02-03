@@ -70,7 +70,7 @@ function Article() {
                         </Badge>
                     )}
                     <div className="w-full md:w-max md:ml-auto flex items-center justify-between md:space-x-4">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2 md:space-x-4">
                             <p className="text-[0.7rem] font-medium -tracking-tighter text-accent-foreground">
                                 Switch to {isInEditMode ? "view" : "edit"} mode
                             </p>
