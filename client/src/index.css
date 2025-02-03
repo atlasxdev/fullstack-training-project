@@ -74,7 +74,7 @@ body {
     }
 }
 
-#article-content > h1,
+#article-content h1,
 h2,
 h3,
 h4,
@@ -83,36 +83,37 @@ h6 {
     line-height: 1.3;
 }
 
-#article-content > h1 {
+#article-content h1 {
     font-size: 2.5rem;
 } /* 40px */
-#article-content > h2 {
+#article-content h2 {
     font-size: 2rem;
 } /* 32px */
-#article-content > h3 {
+#article-content h3 {
     font-size: 1.625rem;
 } /* 26px */
-#article-content > h4 {
+#article-content h4 {
     font-size: 1.375rem;
 } /* 22px */
-#article-content > h5 {
+#article-content h5 {
     font-size: 1.125rem;
 } /* 18px */
-#article-content > h6 {
+#article-content h6 {
     font-size: 1rem;
 } /* 16px */
 
-#article-content > ul ol {
+#article-content ul,
+#article-content ol {
     margin-top: 1em; /* 16px if base font size is 16px */
     margin-bottom: 1em; /* 16px */
     margin-left: 40px; /* Indentation for bullets */
     padding-left: 40px; /* Space for bullet points */
 }
 
-#article-content > ul {
+#article-content ul {
     list-style: disc;
 }
 
-#article-content > ol {
+#article-content ol {
     list-style: decimal;
 }

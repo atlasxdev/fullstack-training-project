@@ -60,7 +60,11 @@ function UpdateUsername() {
                         <FormButton
                             size="default"
                             isSubmitting={form.formState.isSubmitting}
-                            isValid={form.formState.isValid}
+                            isValid={
+                                form.formState.isValid &&
+                                session?.user.user_metadata.username !=
+                                    form.getValues("username")
+                            }
                             label="Save"
                             submittingLabel="Saving..."
                         />
