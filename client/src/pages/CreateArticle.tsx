@@ -1,5 +1,6 @@
-import MaxWidthWrapper from "@/components/max-width-wrapper";
 import { useAxiosInstance } from "@/api/axios-instance";
+import MaxWidthWrapper from "@/components/max-width-wrapper";
+import RTEContent from "@/components/tiptap/rte-content";
 import {
     Card,
     CardContent,
@@ -18,14 +19,13 @@ import {
 } from "@/components/ui/form";
 import FormButton from "@/components/ui/form-button";
 import { Input } from "@/components/ui/input";
+import { sanitizeArticleContent } from "@/lib/utils";
 import { TArticle, zodArticleSchema } from "@/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { sanitizeArticleContent } from "@/lib/utils";
-import RTEContent from "@/components/tiptap/rte-content";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 type CreateArticleResponse = {
     message: string;

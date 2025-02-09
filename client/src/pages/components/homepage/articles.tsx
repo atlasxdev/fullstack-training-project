@@ -1,17 +1,17 @@
 import { useAxiosInstance } from "@/api/axios-instance";
+import { Button } from "@/components/ui/button";
 import type { Articles } from "@/types";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import NoArticles from "./no-articles";
-import Article from "./article";
-import SearchArticle from "./search-article";
-import { useIntersectionObserver } from "usehooks-ts";
-import { tailspin } from "ldrs";
 import { AxiosError } from "axios";
-import Loading from "./loading";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { tailspin } from "ldrs";
 import { useTransition } from "react";
+import { useNavigate } from "react-router";
+import { useIntersectionObserver } from "usehooks-ts";
+import Article from "./article";
 import EditorLoader from "./editor-loader";
+import Loading from "./loading";
+import NoArticles from "./no-articles";
+import SearchArticle from "./search-article";
 tailspin.register();
 
 function Articles() {

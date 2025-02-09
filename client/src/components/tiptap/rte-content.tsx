@@ -1,23 +1,23 @@
-import "reactjs-tiptap-editor/style.css";
+import { ControllerRenderProps } from "react-hook-form";
 import RichTextEditor, {
     BaseKit,
     Bold,
     BulletList,
-    OrderedList,
-    Heading,
-    Italic,
-    TextAlign,
-    Underline,
-    Highlight,
     Color,
+    FontSize,
+    Heading,
+    Highlight,
+    History,
+    Italic,
+    Link,
+    OrderedList,
+    SearchAndReplace,
     SlashCommand,
     Strike,
-    Link,
-    SearchAndReplace,
-    History,
-    FontSize,
+    TextAlign,
+    Underline,
 } from "reactjs-tiptap-editor";
-import { ControllerRenderProps } from "react-hook-form";
+import "reactjs-tiptap-editor/style.css";
 import MaxWidthWrapper from "../max-width-wrapper";
 import { useTheme } from "../theme-provider";
 

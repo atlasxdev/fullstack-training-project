@@ -1,17 +1,43 @@
 name: End-to-end tests
 on: [push]
+
 env:
     VITE_SUPABASE_URL: "https://dioketiuedohqlaegzhm.supabase.co"
     VITE_SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRpb2tldGl1ZWRvaHFsYWVnemhtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzc1NDI4NTksImV4cCI6MjA1MzExODg1OX0.aOl2aPqWDCvzc1eCenT2cqkSPw87zDc36WB9x1dyxs4"
     VITE_SERVER_URL: "http://localhost:3000/api/users"
+
 jobs:
-    cypress-run:
+    lint-check:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
+            - name: Checkout Code
               uses: actions/checkout@v3
 
-            - name: Run Cypress tests
+            - name: Set Up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  cache: npm
+                  cache-dependency-path: client/package-lock.json
+
+            - name: Install Dependencies
+              run: |
+                  cd client
+                  npm ci
+
+            - name: Run Lint Checks
+              run: |
+                  cd client
+                  npm run lint
+
+    cypress-run:
+        needs: lint-check
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Code
+              uses: actions/checkout@v3
+
+            - name: Run Cypress Tests
               uses: cypress-io/github-action@v5
               with:
                   working-directory: ./client

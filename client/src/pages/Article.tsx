@@ -1,18 +1,18 @@
 import { useAxiosInstance } from "@/api/axios-instance";
 import MaxWidthWrapper from "@/components/max-width-wrapper";
-import type { Article } from "@/types";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
-import { formatDistanceToNow } from "date-fns";
-import Loading from "./components/article/loading";
-import NotFound from "./NotFound";
-import DeleteArticleDialog from "./components/article/delete-article-dialog";
-import EditArticle from "./components/article/edit-article";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
+import type { Article } from "@/types";
+import { useQuery } from "@tanstack/react-query";
+import { formatDistanceToNow } from "date-fns";
 import { useState, useTransition } from "react";
+import { useParams } from "react-router";
+import DeleteArticleDialog from "./components/article/delete-article-dialog";
+import EditArticle from "./components/article/edit-article";
+import Loading from "./components/article/loading";
 import SwitchModeLoading from "./components/article/switch-mode-loading";
 import ViewArticle from "./components/article/view-article";
+import NotFound from "./NotFound";
 
 function Article() {
     const [isTransitioning, startTransition] = useTransition();
